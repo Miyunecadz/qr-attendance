@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('time_start');
             $table->string('time_end');
             $table->string('description');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

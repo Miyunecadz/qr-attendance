@@ -23,7 +23,7 @@ return new class extends Migration
             $table->bigInteger('contact_number');
             $table->string('email')->unique();
             $table->string('password');
-            $tabe->softDeletes();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

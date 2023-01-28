@@ -22,6 +22,7 @@ return new class extends Migration
             $table->dateTime('time_in');
             $table->dateTime('time_out');
             $table->boolean('is_present')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
