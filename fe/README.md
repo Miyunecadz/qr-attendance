@@ -1,41 +1,41 @@
-# QR Attendance (fe)
+# fe
 
-Generate Qr Code for every event
+This template should help get you started developing with Vue 3 in Vite.
 
-## Install the dependencies
-```bash
-yarn
-# or
-npm install
+## Recommended IDE Setup
+
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+## Project Setup
+
+```sh
+pnpm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
+### Compile and Hot-Reload for Development
+
+```sh
+pnpm dev
 ```
 
+### Compile and Minify for Production
 
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
+```sh
+pnpm build
 ```
 
+### Run Unit Tests with [Vitest](https://vitest.dev/)
 
-### Format the files
-```bash
-yarn format
-# or
-npm run format
+```sh
+pnpm test:unit
 ```
 
+### Lint with [ESLint](https://eslint.org/)
 
-
-### Build the app for production
-```bash
-quasar build
+```sh
+pnpm lint
 ```
-
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
