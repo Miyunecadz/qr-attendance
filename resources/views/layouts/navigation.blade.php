@@ -21,7 +21,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="{{ route('about') }}" class="nav-link">
+                <a href="{{ route('events.index') }}" class="nav-link  @if(request()->routeIs('events.*')) active @endif">
                     <i class="fas fa-calendar-alt pl-1 pr-2"></i>
                     <p>
                         {{ __('Manage Events') }}
