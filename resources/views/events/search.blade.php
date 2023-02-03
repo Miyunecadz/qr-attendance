@@ -21,7 +21,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="my-2 d-flex">
-                                <form action="{{url('/search')}} " type="get" class="d-flex">
+                                <form action="{{ route('events.search') }}" method="get" class="d-flex">
                                     <input type="text" name="keyword" id="keyword" placeholder="Keyword" class="form-control">
                                     <button type="submit" class="btn btn-primary mx-2" title="Search Event">
                                         <i class="fas fa-search"></i>

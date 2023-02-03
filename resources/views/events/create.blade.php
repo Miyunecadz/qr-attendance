@@ -20,7 +20,7 @@
                 <div class="col-md-8 col-lg-6">
                     <div class="card">
 
-                        <form action="" method="POST">
+                        <form action="{{ route('events.create') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group mb-3">
