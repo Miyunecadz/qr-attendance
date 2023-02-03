@@ -73,9 +73,7 @@
 
                                 <div class="form-group mb-3">
                                     <label for="description">Description</label>
-                                    <textarea name="description" id="description" cols="30" rows="3" class="form-control @error('description') is-invalid @enderror">
-                                        {{ old('description') }}
-                                    </textarea>
+                                    <textarea name="description" id="description" cols="30" rows="3" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
                                     @error('time_end')
                                     <span class="error invalid-feedback">
                                         {{ $message }}

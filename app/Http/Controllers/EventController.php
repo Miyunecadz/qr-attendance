@@ -90,7 +90,6 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        return view('events.edit', compact('event'));
     }
 
     /**
@@ -99,9 +98,9 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Event $event)
     {
-        //
+        return view('events.edit', compact('event'));
     }
 
     /**
