@@ -20,7 +20,7 @@
                 <div class="col-md-8 col-lg-6">
                     <div class="card">
 
-                        <form action="" method="POST">
+                        <form action="{{ route('events.update', ['event' => $event]) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -96,3 +96,5 @@
     </div>
     <!-- /.content -->
 @endsection
+
+ 
