@@ -26,6 +26,11 @@ class DatabaseSeeder extends Seeder
             'account_type' => 1
         ]);
 
+        $this->call([
+            StudentSeeder::class,
+            FacultySeeder::class
+        ]);
+
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

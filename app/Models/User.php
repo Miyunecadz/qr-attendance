@@ -37,8 +37,10 @@ class User extends Authenticatable
     {
         if($this->account_type == 1) {
             return Admin::find($this->user_id)->name;
+        } elseif ( $this->account_type == 2) {
+            return Student::find($this->user_id)->name;
         }
-
-        return 'sample';
+        
+        return Faculty::find($this->user_id)->name;
     }
 }

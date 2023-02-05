@@ -27,22 +27,16 @@
                         </div>
                     </div>
 
+                    <div class="card shadow my-2">
+                      <h6 class="card-header text-left">
+                        Description
+                      </h6>
+                      <div class="card-body">
+                        {{ $event->description }}
+                      </div>
+                    </div>
+
                     <div class="accordion my-3" id="accordionExample">
-                        <div class="card shadow">
-                          <div class="card-header" id="headingOne">
-                            <h2 class="mb-0">
-                              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Description
-                              </button>
-                            </h2>
-                          </div>
-                      
-                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                              {{ $event->description }}
-                            </div>
-                          </div>
-                        </div>
                         <div class="card shadow">
                           <div class="card-header" id="headingTwo">
                             <h2 class="mb-0">

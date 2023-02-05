@@ -28,7 +28,7 @@
                                     <input type="text" name="title"
                                            class="form-control @error('title') is-invalid @enderror"
                                            placeholder="{{ __('Title') }}" value="{{ old('title') }}" required>
-                                    @error('name')
+                                    @error('title')
                                         <span class="error invalid-feedback">
                                             {{ $message }}
                                         </span>
