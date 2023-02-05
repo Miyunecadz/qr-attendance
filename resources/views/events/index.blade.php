@@ -21,11 +21,15 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="my-2 d-flex">
-                                <form action="{{url('/search')}} " type="get" class="d-flex">
+                                <form action="" type="get" class="d-flex">
                                     <input type="text" name="keyword" id="keyword" placeholder="Keyword" class="form-control">
                                     <button type="submit" class="btn btn-primary mx-2" title="Search Event">
                                         <i class="fas fa-search"></i>
-                                    </button> 
+                                       
+                                       
+                                    </button>  
+                                 
+
                                 </form>
                                 <a href="{{route('events.create')}}" class="btn btn-success ml-auto" title="Add Event">
                                     <i class="fas fa-plus"></i>
@@ -101,7 +105,7 @@
                 "hideMethod": "fadeOut"
             }
 
-            toastr.success('{{ $message }}')
+            toast.success('{{ $message }}')
         </script>
     @endif
 @endsection

@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Validator;
-
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -20,10 +16,23 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::paginate(10);
+        $events = Event::latest();
+        if($request->has('keyword')){
+            $events = $events->where('title','LIKE','%'.$request->keyword.'%')
+            ->orwhere('description','LIKE','%'.$request->keyword.'%')
+            ->orwhere('date','LIKE','%'.$request->keyword.'%');
+        
+            //return view('events.index', compact('events'));
+           
+        }
+        $events = $events->paginate(10);
+        
         return view('events.index', compact('events'));
+
+  
+
     }
 
     /**
@@ -34,6 +43,7 @@ class EventController extends Controller
     public function create()
     {
         return view('events.create');
+        
     }
 
     /**
@@ -47,7 +57,7 @@ class EventController extends Controller
         $validator = Validator::make($request->all(),[
             'title' => 'required',
             'description' => 'required',
-            'date' => 'required',
+            'date' => 'required|date',
             'time_start' => 'required',
             'time_end' => 'required',
            
@@ -71,16 +81,26 @@ class EventController extends Controller
         
 
     }
-    public function search()
-    {
-        $search_text = $_GET['keyword'];
-        $events = Event::where('title','LIKE','%'.$search_text.'%')->get('title');
     
+    public function search(Request $request)
+    {
+        if($request->keyword){
+            $events = Event::where('title','LIKE','%'.$request->keyword.'%')->latest()->paginate(15);
+        
+            return view('events.search', compact('events'));
+           
+        }
+        
+        
 
-        return view('events.search', compact('events'));
-        //return $this->hasMany(Event::search);
+        else{
+            return redirect()->back()->with('no record', 'Empty');
+
+        }
+       
         
     }
+    
 
     /**
      * Display the specified resource.

@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::get('events', [\App\Http\Controllers\EventController::class, 'create'])->name('events.create');
-    Route::post('events/create', [\App\Http\Controllers\EventController::class, 'store'])->name('events.create');  
+    //Route::get('events', [\App\Http\Controllers\EventController::class, 'create'])->name('events.create');
+    //Route::post('events/create', [\App\Http\Controllers\EventController::class, 'store'])->name('events.create');  
 
     //Route::get('/search'. 'EventController@search');
-    Route::get('search', [\App\Http\Controllers\EventController::class, 'search'])->name('events.search');
+    //Route::get('search', [\App\Http\Controllers\EventController::class, 'search'])->name('events.index');
 
 
-Route::middleware('auth')->group(function () {
+    Route::middleware('auth')->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::view('about', 'about')->name('about');
 
