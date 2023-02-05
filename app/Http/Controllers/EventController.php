@@ -44,42 +44,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'title' => 'required',
-            'description' => 'required',
-            'date' => 'required',
-            'time_start' => 'required',
-            'time_end' => 'required',
-           
-
-        ]);
-
-        if ($validator->fails()) {
-            return back()
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-        $event = new Event;
-        $event->title=$request->title;
-        $event->description=$request->description;
-        $event->date=$request->date;
-        $event->time_start=$request->time_start;
-        $event->time_end=$request->time_end;
-        $event->save(); 
        
-        return redirect(route('events.index'))->with('success', 'Event added.');
-        
-
-    }
-    public function search()
-    {
-        $search_text = $_GET['keyword'];
-        $events = Event::where('title','LIKE','%'.$search_text.'%')->get('title');
-    
-
-        return view('events.search', compact('events'));
-        //return $this->hasMany(Event::search);
-        
     }
 
     /**
@@ -90,6 +55,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        return view('events.show', compact('event'));
     }
 
     /**
