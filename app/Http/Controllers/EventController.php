@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class EventController extends Controller
 {
@@ -110,7 +111,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        return view('events.edit', compact('event'));
+        
     }
 
     /**
@@ -119,9 +120,9 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Event $event)
     {
-        //
+        return view('events.edit', compact('event'));
     }
 
     /**
@@ -131,9 +132,17 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
-        //
+                $event = Event::where('id', $id)->update([
+                    'title' => $request->title,
+                    'description' => $request->description,
+                    'date' => $request->date,
+                    'time_start' => $request->time_start,
+                    'time_end' => $request->time_end,
+                ]);
+
+        return redirect(route('events.index'))->with('success', 'Event has been successfully updated');
     }
 
     /**
@@ -142,8 +151,11 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Request $request,$id)
+    { 
+        $event = Event::find($id);
+        $event->delete();
+
+        return redirect(route('events.index'))->with('success', 'Event has been successfully deleted');
     }
 }

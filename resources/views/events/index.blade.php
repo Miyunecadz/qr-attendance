@@ -55,7 +55,7 @@
                                         <td>{{ Carbon\Carbon::parse($event->time_end)->format('H:i a') }}</td>
                                         <td>{{ $event->description }}</td>
                                         <td class="d-flex justify-content-center">
-                                            <a href="" class="btn btn-sm btn-warning mx-1">
+                                            <a href="{{ route('events.edit', ['event' => $event]) }}" class="btn btn-sm btn-warning mx-1">
                                                 <i class="fas fa-pen"></i>
                                             </a>
                                             <form action="{{ route('events.destroy', ['event' => $event]) }}" method="post">
