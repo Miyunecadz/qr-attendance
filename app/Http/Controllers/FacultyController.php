@@ -27,7 +27,7 @@ class FacultyController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.faculties.create');
     }
 
     /**
