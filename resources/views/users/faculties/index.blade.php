@@ -38,7 +38,7 @@
                                     </button> 
                                 </form>
                                     
-                                <a href="{{route('faculties.create')}}" class="btn btn-success ml-auto" title="Add Event">
+                                <a href="{{route('faculties.create')}}" class="btn btn-success ml-auto" title="Add Faculty">
                                     <i class="fas fa-plus"></i>
                                 </a>
                             </div>
