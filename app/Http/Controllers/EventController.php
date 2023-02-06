@@ -97,17 +97,38 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
-        $event = Event::where('id', $id)->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'date' => $request->date,
-            'time_start' => $request->time_start,
-            'time_end' => $request->time_end,
-        ]);
+        $validator = Validator::make($request->all(),[
+            'title' => 'required',
+            'description' => 'required',
+            'date' => 'required',
+            'time_start' => 'required',
+            'time_end' => 'required',
+           
 
-        return redirect(route('events.index'))->with('success', 'Event has been successfully updated');
+        ]);
+        if ($validator->fails()) {
+            return back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+            
+            $event = Event::find($id);
+            if(!$event) {
+                abort(404);
+            }
+
+            $event->update ([
+                'title' => $request->title,
+                'description' => $request->description,
+                'date' => $request->date,
+                'time_start' => $request->time_start,
+                'time_end' => $request->time_end,
+            ]);
+
+                return redirect(route('events.index'))->with('success', 'Event has been successfully updated');
+               
     }
 
     /**
@@ -116,11 +137,16 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
-    {
+    public function destroy(Request $request,$id)
+    { 
         $event = Event::find($id);
+        if(!$event) {
+            abort(404);
+        }
+        
         $event->delete();
 
         return redirect(route('events.index'))->with('success', 'Event has been successfully deleted');
-    }
+    } 
+
 }
