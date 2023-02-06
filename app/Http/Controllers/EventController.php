@@ -81,7 +81,7 @@ class EventController extends Controller
         
 
     }
-    
+   /* 
     public function search(Request $request)
     {
         if($request->keyword){
@@ -100,7 +100,7 @@ class EventController extends Controller
        
         
     }
-    
+    **/
 
     /**
      * Display the specified resource.
