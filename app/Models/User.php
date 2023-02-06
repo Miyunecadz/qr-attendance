@@ -35,7 +35,7 @@ class User extends Authenticatable
 
     public function getName()
     {
-        if($this->account_type == 1) {
+        if ($this->account_type == 1) {
             return Admin::find($this->user_id)->name;
         }
 

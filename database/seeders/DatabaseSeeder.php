@@ -16,14 +16,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $admin = Admin::create([
-            'name' => 'Admin'
+            'name' => 'Admin',
         ]);
 
         \App\Models\User::create([
             'username' => 'admin',
             'password' => bcrypt('1234'),
             'user_id' => $admin->id,
-            'account_type' => 1
+            'account_type' => 1,
         ]);
 
         // \App\Models\User::factory()->create([

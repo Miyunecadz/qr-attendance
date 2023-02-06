@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Collection;
-
 use App\Models\Event;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
@@ -20,20 +16,14 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $events = Event::latest();
-        if($request->has('keyword')){
-            $events = $events->where('title','LIKE','%'.$request->keyword.'%')
-            ->orwhere('description','LIKE','%'.$request->keyword.'%')
-            ->orwhere('date','LIKE','%'.$request->keyword.'%');
-        
-            //return view('events.index', compact('events'));
-           
+        if ($request->has('keyword')) {
+            $events = $events->where('title', 'LIKE', '%'.$request->keyword.'%')
+            ->orwhere('description', 'LIKE', '%'.$request->keyword.'%')
+            ->orwhere('date', 'LIKE', '%'.$request->keyword.'%');
         }
         $events = $events->paginate(10);
-        
+
         return view('events.index', compact('events'));
-
-  
-
     }
 
     /**
@@ -44,7 +34,6 @@ class EventController extends Controller
     public function create()
     {
         return view('events.create');
-        
     }
 
     /**
@@ -55,13 +44,12 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
             'date' => 'required|date',
             'time_start' => 'required',
             'time_end' => 'required',
-           
 
         ]);
 
@@ -71,37 +59,15 @@ class EventController extends Controller
                         ->withInput();
         }
         $event = new Event;
-        $event->title=$request->title;
-        $event->description=$request->description;
-        $event->date=$request->date;
-        $event->time_start=$request->time_start;
-        $event->time_end=$request->time_end;
-        $event->save(); 
-       
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->date = $request->date;
+        $event->time_start = $request->time_start;
+        $event->time_end = $request->time_end;
+        $event->save();
+
         return redirect(route('events.index'))->with('success', 'Event added.');
-        
-
     }
-   /* 
-    public function search(Request $request)
-    {
-        if($request->keyword){
-            $events = Event::where('title','LIKE','%'.$request->keyword.'%')->latest()->paginate(15);
-        
-            return view('events.search', compact('events'));
-           
-        }
-        
-        
-
-        else{
-            return redirect()->back()->with('no record', 'Empty');
-
-        }
-       
-        
-    }
-    **/
 
     /**
      * Display the specified resource.
@@ -111,7 +77,6 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        
     }
 
     /**
@@ -132,15 +97,15 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-                $event = Event::where('id', $id)->update([
-                    'title' => $request->title,
-                    'description' => $request->description,
-                    'date' => $request->date,
-                    'time_start' => $request->time_start,
-                    'time_end' => $request->time_end,
-                ]);
+        $event = Event::where('id', $id)->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'date' => $request->date,
+            'time_start' => $request->time_start,
+            'time_end' => $request->time_end,
+        ]);
 
         return redirect(route('events.index'))->with('success', 'Event has been successfully updated');
     }
@@ -151,8 +116,8 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$id)
-    { 
+    public function destroy(Request $request, $id)
+    {
         $event = Event::find($id);
         $event->delete();
 

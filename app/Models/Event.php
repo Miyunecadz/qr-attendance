@@ -14,6 +14,6 @@ class Event extends Model
         'date',
         'time_start',
         'time_end',
-        'description'
+        'description',
     ];
 }
