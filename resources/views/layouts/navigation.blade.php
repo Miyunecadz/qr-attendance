@@ -29,7 +29,7 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item @if(request()->routeIs('students.*')|| request()->routeIs('faculties.*')) menu-is-opening menu-open @endif">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>
@@ -37,15 +37,15 @@
                         <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" style="display: none;">
+                <ul class="nav nav-treeview" style="display: @if(request()->routeIs('students.*') || request()->routeIs('faculties.*')) block @else none @endif;">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('students.index') }}" class="nav-link @if(request()->routeIs('students.*')) active @endif">
                             <i class="fas fa-user-graduate"></i>
                             <p>Manage Students</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('faculties.index') }}" class="nav-link @if(request()->routeIs('faculties.*')) active @endif">
                             <i class="fas fa-user-tie"></i>
                             <p>Manage Faculties</p>
                         </a>
