@@ -13,6 +13,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
     @yield('styles')
+    @laravelPWA
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -56,6 +57,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="/" class="brand-link">
+            @laravelPWA
             <img src="https://trace.southernleyte.org.ph/assets/img/slsu-logo.png" alt="AdminLTE Logo"
                  class="brand-image img-circle elevation-3"
                  style="opacity: .8">
