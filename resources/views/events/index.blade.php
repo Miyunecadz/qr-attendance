@@ -38,9 +38,11 @@
                                     </button>  
                                 </form>
                                     
-                                <a href="{{route('events.create')}}" class="btn btn-success ml-auto" title="Add Event">
-                                    <i class="fas fa-plus"></i>
-                                </a>
+                                @if(auth()->user()->isAdmin())
+                                    <a href="{{route('events.create')}}" class="btn btn-success ml-auto" title="Add Event">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                @endif
                             </div>
 
                             <table class="table table-responsive-sm table-striped-columns table-bordered table-hover">
