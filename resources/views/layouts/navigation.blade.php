@@ -29,56 +29,58 @@
                 </a>
             </li>
 
-            <li class="nav-item @if(request()->routeIs('students.*')|| request()->routeIs('faculties.*')) menu-is-opening menu-open @endif">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-users"></i>
-                    <p>
-                        {{ __('Users') }}
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview" style="display: @if(request()->routeIs('students.*') || request()->routeIs('faculties.*')) block @else none @endif;">
-                    <li class="nav-item">
-                        <a href="{{ route('students.index') }}" class="nav-link @if(request()->routeIs('students.*')) active @endif">
-                            <i class="fas fa-user-graduate"></i>
-                            <p>Manage Students</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('faculties.index') }}" class="nav-link @if(request()->routeIs('faculties.*')) active @endif">
-                            <i class="fas fa-user-tie"></i>
-                            <p>Manage Faculties</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            @if(auth()->user()->isAdmin())
+                <li class="nav-item @if(request()->routeIs('students.*')|| request()->routeIs('faculties.*')) menu-is-opening menu-open @endif">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            {{ __('Users') }}
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: @if(request()->routeIs('students.*') || request()->routeIs('faculties.*')) block @else none @endif;">
+                        <li class="nav-item">
+                            <a href="{{ route('students.index') }}" class="nav-link @if(request()->routeIs('students.*')) active @endif">
+                                <i class="fas fa-user-graduate"></i>
+                                <p>Manage Students</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('faculties.index') }}" class="nav-link @if(request()->routeIs('faculties.*')) active @endif">
+                                <i class="fas fa-user-tie"></i>
+                                <p>Manage Faculties</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
-            <li class="nav-item">
-                <a href="{{ route('about') }}" class="nav-link">
-                    <i class="nav-icon far fa-address-card"></i>
-                    <p>
-                        {{ __('About us') }}
-                    </p>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a href="{{ route('about') }}" class="nav-link">
+                        <i class="nav-icon far fa-address-card"></i>
+                        <p>
+                            {{ __('About us') }}
+                        </p>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-circle nav-icon"></i>
-                    <p>
-                        Two-level menu
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview" style="display: none;">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Child menu</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-circle nav-icon"></i>
+                        <p>
+                            Two-level menu
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Child menu</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
         </ul>
     </nav>
     <!-- /.sidebar-menu -->
