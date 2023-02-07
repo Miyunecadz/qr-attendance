@@ -33,6 +33,11 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function scopeIsAdmin()
+    {
+        return $this->account_type == 1;
+    }
+
     public function getName()
     {
         if ($this->account_type == 1) {

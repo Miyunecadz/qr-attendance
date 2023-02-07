@@ -38,9 +38,11 @@
                                     </button>  
                                 </form>
                                     
-                                <a href="{{route('events.create')}}" class="btn btn-success ml-auto" title="Add Event">
-                                    <i class="fas fa-plus"></i>
-                                </a>
+                                @if(auth()->user()->isAdmin())
+                                    <a href="{{route('events.create')}}" class="btn btn-success ml-auto" title="Add Event">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                @endif
                             </div>
 
                             <table class="table table-responsive-sm table-striped-columns table-bordered table-hover">
@@ -49,7 +51,7 @@
                                         <th>Title</th>
                                         <th>Date</th>
                                         <th>Time Start</th>
-                                        <th>Time End</th>
+                                        <th>Time End</th>                                        
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -69,16 +71,18 @@
                                             <a href="{{ route('events.show', ['event' => $event]) }}" class="btn btn-sm btn-primary mx-1" title="Show">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('events.edit', ['event' => $event]) }}" class="btn btn-sm btn-warning mx-1">
-                                                <i class="fas fa-pen"></i>
-                                            </a>
-                                            <form action="{{ route('events.destroy', ['event' => $event]) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger mx-1">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
+                                            @if(auth()->user()->isAdmin())
+                                                <a href="{{ route('events.edit', ['event' => $event]) }}" class="btn btn-sm btn-warning mx-1">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                                <form action="{{ route('events.destroy', ['event' => $event]) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger mx-1">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr class="collapse" id="collapseEvent-{{$event->id}}">
