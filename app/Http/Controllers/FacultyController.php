@@ -16,12 +16,7 @@ class FacultyController extends Controller
      */
     public function index(Request $request)
     {
-        /*
-        $faculties = Faculty::latest();
-
-        $faculties = $faculties->paginate(10);
-        return view('users.faculties.index', compact('faculties'));
-        **/
+        
         $faculties = Faculty::latest();
         if ($request->has('keyword')) {
             $faculties = $faculties->where('employee_id', 'LIKE', '%'.$request->keyword.'%')
@@ -123,7 +118,36 @@ class FacultyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            
+            'name' => 'required',
+            'department' => 'required',
+            'position' => 'required',
+            'contact_number' => 'required|numeric',
+            'email' => 'required|email',
+           
+
+        ]);
+        if ($validator->fails()) {
+            return back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+            
+            $faculty = Faculty::find($id);
+            if(!$faculty) {
+                abort(404);
+            }
+
+            $faculty->update ([
+                'name' => $request->name,
+                'department' => $request->department,
+                'position' => $request->position,
+                'contact_number' => $request->contact_number,
+                'email' => $request->email,
+            ]);
+
+                return redirect(route('faculties.index'))->with('success', 'Faculty information successfully updated');
     }
 
     /**
@@ -132,8 +156,17 @@ class FacultyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        { 
+            $faculty = Faculty::find($id);
+            if(!$faculty) {
+                abort(404);
+            }
+            User::where('user_id', $id)->first()->delete();            
+            $faculty->delete();
+    
+            return redirect(route('faculties.index'))->with('success', 'Faculty has been successfully deleted');
+        } 
     }
 }
