@@ -32,7 +32,7 @@
                         <div class="card-body">
                             <div class="my-2 d-flex">
                                 <form action="" type="get" class="d-flex">
-                                    <input type="search" name="keyword" id="keyword" placeholder="Keyword" class="form-control">
+                                    <input type="search" name="keyword" id="keyword" placeholder="Keyword" class="form-control"value="{{ request()->keyword }}">
                                     <button type="submit" class="btn btn-primary mx-2" title="Search Event">
                                         <i class="fas fa-search"></i>
                                     </button> 

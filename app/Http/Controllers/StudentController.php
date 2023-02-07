@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
 {
@@ -12,9 +14,22 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    
+     protected $guarded = ['id_number'];
+
+    public function index(Request $request)
     {
-        $students = Student::paginate(10);
+        $students = Student::latest();
+        if ($request->has('keyword')) {
+            $students = $students->where('id_number', 'LIKE', '%'.$request->keyword.'%')
+                        ->orWhere('name', 'LIKE', '%'.$request->keyword.'%')
+                        ->orWhere('department', 'LIKE', '%'.$request->keyword.'%')
+                        ->orWhere('section', 'LIKE', '%'.$request->keyword.'%')
+                        ->orWhere('email', 'LIKE', '%'.$request->keyword.'%');
+
+                } 
+
+        $students = $students->paginate(10);
         return view('users.students.index', compact('students'));
     }
 
@@ -36,8 +51,43 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'id_number' => 'required|unique:students',
+            'name' => 'required|string',
+            'department' => 'required|string',
+            'year_level' => 'required|numeric',
+            'section' => 'required',
+            'contact_number' => 'required|numeric|min:10',
+            'email' => 'required|email'
+
+        ]);
+        if ($validator->fails()) {
+            return back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $student = new Student;
+        $student->id_number = $request->id_number;
+        $student->name = $request->name;
+        $student->department = $request->department;
+        $student->year_level = $request->year_level;
+        $student->section = $request->section;
+        $student->contact_number = $request->contact_number;
+        $student->email = $request->email;
+        $student->save();
+
+        $student = User::create([
+        'username' => $student->id_number,
+        'password'  =>bcrypt('1234'),
+        'user_id' => $student->id,
+        'account_type' => 2
+        ]);
+
+        return redirect(route('students.index'))->with('success','New Student has been added to the database.');
     }
+           
+    
 
     /**
      * Display the specified resource.
@@ -67,9 +117,41 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function update(Request $request, $id)
-    {
-        //
+    {       
+        $validator = Validator::make($request->all(), [
+            'id_number' => 'required|exists:students,id_number',
+            'name' => 'required|string',
+            'department' => 'required|string',
+            'year_level' => 'required|numeric',
+            'section' => 'required',
+            'contact_number' => 'required|numeric|min:10',
+            'email' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $student = Student::find($id);
+        if(!$student) {
+            abort(404);
+        }
+
+        $student->update
+        ([  
+            'name' => $request->name,
+            'department' => $request->department,
+            'year_level' => $request->year_level,
+            'section' => $request ->section,
+            'contact_number' => $request ->contact_number,
+            'email' => $request ->email,
+        ]);
+
+        return redirect(route('students.index'))->with('success','Student has been successfully updated.');
     }
 
     /**
@@ -78,8 +160,36 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $student = Student::find($id);
+        if(!$student) {
+            abort(404);
+        };
+        
+        if ($student !== null) {
+        ([  
+            'id_number' => $request->id_number,
+            'name' => $request->name,
+            'department' => $request->department,
+            'year_level' => $request->year_level,
+            'section' => $request->section,
+            'contact_number' => $request->contact_number,
+            'email' => $request->email,
+        ]);
+        $student->delete();
+        }
+
+        $student = User::where('user_id', $id)->first();
+
+        if ($student !== null) {
+        ([
+            'user_id' => $student->id,
+            'account_type' => 2 ,
+        ]);
+        $student->delete();
+        }
+
+        return redirect(route('students.index'))->with('success','Student has been successfully deleted.');
     }
 }
