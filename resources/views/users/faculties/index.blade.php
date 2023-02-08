@@ -63,6 +63,9 @@
                                         <td>{{ Str::title($faculty->position) }}</td>
                                         <td>{{ $faculty->email }}</td>
                                         <td class="d-flex justify-content-center h-100">
+                                            <a href="{{ route('faculties.qr', ['faculty' => $faculty]) }}" class="btn btn-sm btn-primary mx-1" title="Show Qr">
+                                                <i class="fas fa-qrcode"></i>
+                                            </a>
                                             {{-- <a href="{{ route('faculties.show', ['faculty' => $faculty]) }}" class="btn btn-sm btn-primary mx-1" title="Show">
                                                 <i class="fas fa-eye"></i>
                                             </a> --}}

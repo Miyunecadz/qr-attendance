@@ -32,7 +32,7 @@
                         <div class="card-body">
                             <div class="my-2 d-flex">
                                 <form action="" type="get" class="d-flex">
-                                    <input type="search" name="keyword" id="keyword" placeholder="Keyword" class="form-control">
+                                    <input type="search" name="keyword" id="keyword" placeholder="Keyword" class="form-control"value="{{ request()->keyword }}">
                                     <button type="submit" class="btn btn-primary mx-2" title="Search Event">
                                         <i class="fas fa-search"></i>
                                     </button> 
@@ -63,6 +63,9 @@
                                         <td>{{ $student->section }}</td>
                                         <td>{{ $student->email }}</td>
                                         <td class="d-flex justify-content-center h-100">
+                                            <a href="{{ route('students.qr', ['student' => $student]) }}" class="btn btn-sm btn-primary mx-1" title="Show Qr">
+                                                <i class="fas fa-qrcode"></i>
+                                            </a>
                                             {{-- <a href="{{ route('students.show', ['student' => $student]) }}" class="btn btn-sm btn-primary mx-1" title="Show">
                                                 <i class="fas fa-eye"></i>
                                             </a> --}}

@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('events', EventController::class);
     Route::resource('students', StudentController::class);
     Route::resource('faculties', FacultyController::class);
+    Route::get('/faculties/{faculty}/qrcode', [FacultyController::class, 'qrcode'])->name('faculties.qr');
+    Route::get('/students/{student}/qrcode', [StudentController::class, 'qrcode'])->name('students.qr');
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');

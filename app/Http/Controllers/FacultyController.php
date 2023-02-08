@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Faculty;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class FacultyController extends Controller
@@ -168,5 +169,17 @@ class FacultyController extends Controller
     
             return redirect(route('faculties.index'))->with('success', 'Faculty has been successfully deleted');
         } 
+    }
+
+    /**
+     * Display qrcode the faculty
+     */
+    public function qrcode(Faculty $faculty)
+    {
+        $qrcode = Crypt::encryptString($faculty->employee_id);
+        return view('users.qr', [
+            'qrcode' => $qrcode,
+            'user' => $faculty
+        ]);
     }
 }
