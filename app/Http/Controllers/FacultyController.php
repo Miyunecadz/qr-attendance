@@ -53,7 +53,7 @@ class FacultyController extends Controller
             'name' => 'required',
             'department' => 'required',
             'position' => 'required',
-            'contact_number' => 'required|numeric|max:10|min:10',
+            'contact_number' => 'required|numeric|min:10',
             'email' => 'required|email',
 
         ]);
