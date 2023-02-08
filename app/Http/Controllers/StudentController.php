@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
@@ -191,5 +192,17 @@ class StudentController extends Controller
         }
 
         return redirect(route('students.index'))->with('success','Student has been successfully deleted.');
+    }
+
+    /**
+     * Display qrcode the student
+     */
+    public function qrcode(Student $student)
+    {
+        $qrcode = Crypt::encryptString($student->id_number);
+        return view('users.qr', [
+            'qrcode' => $qrcode,
+            'user' => $student
+        ]);
     }
 }

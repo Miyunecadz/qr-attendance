@@ -63,6 +63,9 @@
                                         <td>{{ $student->section }}</td>
                                         <td>{{ $student->email }}</td>
                                         <td class="d-flex justify-content-center h-100">
+                                            <a href="{{ route('students.qr', ['student' => $student]) }}" class="btn btn-sm btn-primary mx-1" title="Show Qr">
+                                                <i class="fas fa-qrcode"></i>
+                                            </a>
                                             {{-- <a href="{{ route('students.show', ['student' => $student]) }}" class="btn btn-sm btn-primary mx-1" title="Show">
                                                 <i class="fas fa-eye"></i>
                                             </a> --}}
