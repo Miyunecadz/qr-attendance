@@ -165,7 +165,11 @@ class FacultyController extends Controller
             if(!$faculty) {
                 abort(404);
             }
-            User::where('user_id', $id)->first()->delete();            
+           
+            //User::where('user_id', $id)->first()->delete(); 
+            
+            
+             User::where('user_id', $id)->where('account_type','3')->first()->delete();            
             $faculty->delete();
     
             return redirect(route('faculties.index'))->with('success', 'Faculty has been successfully deleted');
