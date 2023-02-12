@@ -31,5 +31,5 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/offline', function () {
-    return view('modules/laravelpwa/offline'); 
+    return view('vendor/laravelpwa/offline'); 
 });
