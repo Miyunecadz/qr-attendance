@@ -38,6 +38,16 @@ class User extends Authenticatable
         return $this->account_type == 1;
     }
 
+    public function scopeIsStudent()
+    {
+        return $this->account_type == 2;
+    }
+
+    public function scopeIsFaculty()
+    {
+        return $this->account_type == 3;
+    }
+
     public function getName()
     {
         if ($this->account_type == 1) {
@@ -47,5 +57,16 @@ class User extends Authenticatable
         }
         
         return Faculty::find($this->user_id)->name;
+    }
+
+    public function getUser()
+    {
+        if ($this->account_type == 1) {
+            return Admin::find($this->user_id);
+        } elseif ( $this->account_type == 2) {
+            return Student::find($this->user_id);
+        }
+        
+        return Faculty::find($this->user_id);
     }
 }
