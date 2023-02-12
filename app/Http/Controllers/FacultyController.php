@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Faculty;
 use App\Models\User;
+use App\Models\Faculty;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
@@ -68,7 +69,7 @@ class FacultyController extends Controller
         $faculty = new Faculty;
         $faculty->employee_id = $request->employee_id;
         $faculty->name = $request->name;
-        $faculty->department = $request->department;
+        $faculty->department = Str::upper($request->department);
         $faculty->position = $request->position;
         $faculty->contact_number = $request->contact_number;
         $faculty->email = $request->email;
@@ -142,7 +143,7 @@ class FacultyController extends Controller
 
             $faculty->update ([
                 'name' => $request->name,
-                'department' => $request->department,
+                'department' => Str::upper($request->department),
                 'position' => $request->position,
                 'contact_number' => $request->contact_number,
                 'email' => $request->email,

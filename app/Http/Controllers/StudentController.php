@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
 use App\Models\User;
+use App\Models\Student;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
@@ -71,7 +72,7 @@ class StudentController extends Controller
         $student = new Student;
         $student->id_number = $request->id_number;
         $student->name = $request->name;
-        $student->department = $request->department;
+        $student->department = Str::upper($request->department);
         $student->year_level = $request->year_level;
         $student->section = $request->section;
         $student->contact_number = $request->contact_number;
@@ -142,10 +143,9 @@ class StudentController extends Controller
             abort(404);
         }
 
-        $student->update
-        ([  
+        $student->update([  
             'name' => $request->name,
-            'department' => $request->department,
+            'department' => Str::upper($request->department),
             'year_level' => $request->year_level,
             'section' => $request ->section,
             'contact_number' => $request ->contact_number,
@@ -161,36 +161,16 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
         $student = Student::find($id);
         if(!$student) {
             abort(404);
         };
-        
-        if ($student !== null) {
-        ([  
-            'id_number' => $request->id_number,
-            'name' => $request->name,
-            'department' => $request->department,
-            'year_level' => $request->year_level,
-            'section' => $request->section,
-            'contact_number' => $request->contact_number,
-            'email' => $request->email,
-        ]);
+    
+        $user = User::where('user_id', $id)->where('account_type', 2)->first();
         $student->delete();
-        }
-
-        $student = User::where('user_id', $id)->first();
-
-        if ($student !== null) {
-        ([
-            'user_id' => $student->id,
-            'account_type' => 2 ,
-        ]);
-        $student->delete();
-        }
-
+        $user->delete();
         return redirect(route('students.index'))->with('success','Student has been successfully deleted.');
     }
 
