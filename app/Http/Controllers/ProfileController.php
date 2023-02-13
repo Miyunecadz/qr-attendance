@@ -17,4 +17,14 @@ class ProfileController extends Controller
     {
         
     }
+
+    public function showPassword()
+    {
+        return view('users.password');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        
+    }
 }

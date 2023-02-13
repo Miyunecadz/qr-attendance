@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,8 +27,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/faculties/{faculty}/qrcode', [FacultyController::class, 'qrcode'])->name('faculties.qr');
     Route::get('/students/{student}/qrcode', [StudentController::class, 'qrcode'])->name('students.qr');
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
-    Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
-    Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('profile/password', [ProfileController::class, 'showPassword'])->name('profile.password-show');
+    Route::put('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password-update');
 });
 
 Route::get('/offline', function () {
