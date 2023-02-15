@@ -104,4 +104,14 @@ class ProfileController extends Controller
             return back()->with('success', 'Faculty information successfully updated');
         }
     }
+
+    public function showPassword()
+    {
+        return view('users.password');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        
+    }
 }

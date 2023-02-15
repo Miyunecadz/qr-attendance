@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('Manage Events') }}</h1>
+                    <h1 class="m-0">{{ __('Manage Participants') }}</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -72,8 +72,8 @@
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                             @if(auth()->user()->isAdmin())
-                                                <a href="{{ route('events.edit', ['event' => $event]) }}" class="btn btn-sm btn-success mx-1" title="Manage participant">
-                                                    <i class="fas fa-users"></i>
+                                                <a href="{{ route('events.edit', ['event' => $event]) }}" class="btn btn-sm btn-success mx-1" title="Add participant">
+                                                    <i class="fas fa-user-plus"></i>
                                                 </a>
                                                 <a href="{{ route('events.edit', ['event' => $event]) }}" class="btn btn-sm btn-warning mx-1">
                                                     <i class="fas fa-pen"></i>
