@@ -20,7 +20,7 @@
                 <div class="col-md-8 col-lg-4">
                     <div class="card">
 
-                        <form action="{{ route('profile.update') }}" method="POST">
+                        <form action="{{ route('profile.password-update') }}" method="POST">
                             @csrf
                             @method('PUT')
 

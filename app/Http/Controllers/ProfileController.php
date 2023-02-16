@@ -10,6 +10,9 @@ use App\Models\Admin;
 use App\Models\Student;
 use App\Models\Faculty;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class ProfileController extends Controller
 {
@@ -113,5 +116,28 @@ class ProfileController extends Controller
     public function updatePassword(Request $request)
     {
         
+        $request->validate([
+            'current_password'=> ['required'],
+            'new_password'=> ['required','min:8','confirmed']
+        ]);
+
+        $currentpass = Hash::check($request->current_password, auth()->user()->password);
+
+        if ($currentpass)
+        {
+    
+        auth()->user()->update([
+            'password'=> Hash::make($request->new_password)
+        ]);
+
+       return back()->with('success', 'Password updated');
+       
+        }
+        else{
+            return back()->withErrors('error', 'Password not match');
+        }
+       
+
+  
     }
-}
+    }
