@@ -22,51 +22,44 @@ class ProfileController extends Controller
     }
 
     public function update(Request $request)
-    {
-        $user = [];
-       
+    {  
         if(auth()->user()->account_type == 1) { 
+
             $user = Admin::find(auth()->user()->user_id);
+
             $validator = Validator($request->all(),[
-            
                 'name' => 'required',
-               
-               
-    
             ]);
             if ($validator->fails()) {
                 return back()
                             ->withErrors($validator)
                             ->withInput();
             }
+
             $user->update ([
-                
-                
                 'name' => $request->name,
-               
             ]);
+
             return back()->with('success', 'Admin information successfully updated');
         }
         
         elseif(auth()->user()->account_type == 2) { 
+
             $user = Student::find(auth()->user()->user_id);
+
             $validator = Validator($request->all(),[
-            
                 'name' => 'required',
                 'department' => 'required',
                 'year_level' => 'required|numeric',
                 'section' => 'required',
                 'contact_number' => 'required|numeric',
                 'email' => 'required|email',
-               
-               
-    
             ]);
+
             if ($validator->fails()) {
-                return back()
-                            ->withErrors($validator)
-                            ->withInput();
+                return back()->withErrors($validator)->withInput();
             }
+
             $user->update ([
                 'name' => $request->name,
                 'department' => $request->department,
@@ -74,36 +67,33 @@ class ProfileController extends Controller
                 'section' => $request->section,
                 'contact_number' => $request->contact_number,
                 'email' => $request->email,
-               
             ]);
             return back()->with('success', 'Student information successfully updated');
         }
+
         elseif(auth()->user()->account_type == 3) { 
             $user = Faculty::find(auth()->user()->user_id);
+
             $validator = Validator($request->all(),[
-            
                 'name' => 'required',
                 'department' => 'required',
                 'position' => 'required',
                 'contact_number' => 'required|numeric',
                 'email' => 'required|email',
-               
-               
-    
             ]);
+
             if ($validator->fails()) {
-                return back()
-                            ->withErrors($validator)
-                            ->withInput();
+                return back()->withErrors($validator)->withInput();
             }
+
             $user->update ([
                 'name' => $request->name,
                 'department' => $request->department,
                 'position' => $request->position,
                 'contact_number' => $request->contact_number,
                 'email' => $request->email,
-               
             ]);
+
             return back()->with('success', 'Faculty information successfully updated');
         }
     }
@@ -125,19 +115,13 @@ class ProfileController extends Controller
 
         if ($currentpass)
         {
-    
-        auth()->user()->update([
-            'password'=> Hash::make($request->new_password)
-        ]);
+            auth()->user()->update([
+                'password'=> Hash::make($request->new_password)
+            ]);
 
-       return back()->with('success', 'Password updated');
-       
+            return back()->with('success', 'Password updated');
         }
-        else{
-            return back()->withErrors('error', 'Password not match');
-        }
-       
-
-  
+        
+        return back()->withErrors('error', 'Password not match');
     }
-    }
+}

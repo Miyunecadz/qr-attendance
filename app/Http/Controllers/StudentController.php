@@ -180,6 +180,7 @@ class StudentController extends Controller
     public function qrcode(Student $student)
     {
         $qrcode = Crypt::encryptString($student->id_number);
+        
         return view('users.qr', [
             'qrcode' => $qrcode,
             'user' => $student

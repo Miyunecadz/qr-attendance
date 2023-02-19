@@ -28,12 +28,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             StudentSeeder::class,
-            FacultySeeder::class
+            FacultySeeder::class,
+            EventSeeder::class,
+            EventParticipantSeeder::class,
         ]);
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

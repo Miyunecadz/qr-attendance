@@ -72,7 +72,7 @@
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                             @if(auth()->user()->isAdmin())
-                                                <a href="{{ route('events.edit', ['event' => $event]) }}" class="btn btn-sm btn-success mx-1" title="Manage participant">
+                                                <a href="{{ route('event-participants.index', ['event' => $event]) }}" class="btn btn-sm btn-success mx-1" title="Manage participant">
                                                     <i class="fas fa-users"></i>
                                                 </a>
                                                 <a href="{{ route('events.edit', ['event' => $event]) }}" class="btn btn-sm btn-warning mx-1">

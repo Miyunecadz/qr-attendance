@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventParticipantController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
@@ -31,6 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('profile/password', [ProfileController::class, 'showPassword'])->name('profile.password-show');
     Route::put('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password-update');
+    Route::get('events/{event}/participants', [EventParticipantController::class, 'index'])->name('event-participants.index');
+    Route::delete('events/{event}/participants', [EventParticipantController::class, 'destroy'])->name('event-participants.destroy');
 });
 
 Route::get('/offline', function () {
