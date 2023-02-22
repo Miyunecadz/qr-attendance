@@ -37,7 +37,7 @@
                                     </button>
 
                                     @if(auth()->user()->isAdmin())
-                                        <a href="{{route('events.create')}}" class="btn btn-success mx-1" title="Add Participant">
+                                        <a href="{{route('event-participants.create', ['event' => request()->event])}}" class="btn btn-success mx-1" title="Add Participant">
                                             <i class="fas fa-user-plus"></i>
                                         </a>
                                     @endif

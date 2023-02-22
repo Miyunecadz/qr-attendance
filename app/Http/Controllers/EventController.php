@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventParticipant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,11 +17,25 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $events = Event::latest();
-        if ($request->has('keyword')) {
+
+        if(!auth()->user()->isAdmin())
+        {
+            $user = auth()->user();
+            $eventIds = EventParticipant::where('user_id', $user->user_id)
+                ->where('user_type', $user->account_type)
+                ->get()
+                ->pluck('event_id')
+                ->toArray();
+
+            $events = $events->whereIn('id', $eventIds);
+        }
+
+        if ($request->has('keyword') && $request->keyword != null) {
             $events = $events->where('title', 'LIKE', '%'.$request->keyword.'%')
             ->orwhere('description', 'LIKE', '%'.$request->keyword.'%')
             ->orwhere('date', 'LIKE', '%'.$request->keyword.'%');
         }
+
         $events = $events->paginate(10);
 
         return view('events.index', compact('events'));
