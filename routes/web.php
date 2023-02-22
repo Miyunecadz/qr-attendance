@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('profile/password', [ProfileController::class, 'showPassword'])->name('profile.password-show');
     Route::put('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password-update');
     Route::get('events/{event}/participants', [EventParticipantController::class, 'index'])->name('event-participants.index');
+    Route::get('events/{event}/participants/create', [EventParticipantController::class, 'create'])->name('event-participants.create');
+    Route::post('events/{event}/participants', [EventParticipantController::class, 'store'])->name('event-participants.store');
     Route::delete('events/{event}/participants', [EventParticipantController::class, 'destroy'])->name('event-participants.destroy');
 });
 

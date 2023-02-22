@@ -18,31 +18,26 @@ class EventParticipantSeeder extends Seeder
      */
     public function run()
     {
-        $event = Event::first();
+        $faculties = Faculty::first();
 
-        $faculties = Faculty::factory(5)->create([
-            'department' => 'CCSIT'
-        ])->toArray();
+        $events = Event::inRandomOrder()->limit(3)->get();
+        foreach($events as $event) {
+            EventParticipant::create([
+                'event_id' => $event->id,
+                'user_id' => $faculties->id,
+                'user_type' => 3
+            ]);
+        }
 
-        $toBeInsertedFaculty = collect($faculties)->map(function ($value) use ($event) {
-            $faculty['event_id'] = $event->id;
-            $faculty['user_id'] = $value['id'];
-            $faculty['user_type'] = 3;
-            return $faculty;
-        })->all();
 
-        $students = Student::factory(5)->create([
-            'department' => 'CCSIT'
-        ])->toArray();
-
-        $toBeInsertedStudent = collect($students)->map(function ($value) use ($event) {
-            $student['event_id'] = $event->id;
-            $student['user_id'] = $value['id'];
-            $student['user_type'] = 2;
-            return $student;
-        })->all();
-
-        EventParticipant::insert($toBeInsertedFaculty);
-        EventParticipant::insert($toBeInsertedStudent);
+        $students = Student::first();
+        $events = Event::inRandomOrder()->limit(3)->get();
+        foreach($events as $event) {
+            EventParticipant::create([
+                'event_id' => $event->id,
+                'user_id' => $students->id,
+                'user_type' => 2
+            ]);
+        }
     }
 }
