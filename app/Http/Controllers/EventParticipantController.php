@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EventParticipant;
-use App\Models\Faculty;
-use App\Models\Student;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class EventParticipantController extends Controller
 {
@@ -20,6 +17,7 @@ class EventParticipantController extends Controller
     public function create()
     {
         $participants = [];
+
         return view('events.participants.create', compact('participants'));
     }
 
@@ -38,7 +36,6 @@ class EventParticipantController extends Controller
 
         EventParticipant::whereIn('id', $participantIds)->delete();
 
-            return redirect()->back()->with('success', 'Participants have been successfully deleted.');
+        return redirect()->back()->with('success', 'Participants have been successfully deleted.');
     }
-
 }

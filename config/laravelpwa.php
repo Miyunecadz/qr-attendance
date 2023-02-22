@@ -9,40 +9,40 @@ return [
         'background_color' => '#ffffff',
         'theme_color' => '#000000',
         'display' => 'standalone',
-        'orientation'=> 'any',
-        'status_bar'=> 'black',
+        'orientation' => 'any',
+        'status_bar' => 'black',
         'icons' => [
             '72x72' => [
                 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '96x96' => [
                 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '128x128' => [
                 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '144x144' => [
                 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '152x152' => [
                 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '192x192' => [
                 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '384x384' => [
                 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
             '512x512' => [
                 'path' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
-                'purpose' => 'any'
+                'purpose' => 'any',
             ],
         ],
         'splash' => [
@@ -63,11 +63,11 @@ return [
                 'description' => 'Shortcut Link 1 Description',
                 'url' => '/',
                 'icons' => [
-                    "src" => "https://trace.southernleyte.org.ph/assets/img/slsu-logo.png",
-                    "purpose" => "any"
-                ]
+                    'src' => 'https://trace.southernleyte.org.ph/assets/img/slsu-logo.png',
+                    'purpose' => 'any',
+                ],
             ],
         ],
-        'custom' => []
-    ]
+        'custom' => [],
+    ],
 ];

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Faculty;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,14 +17,14 @@ class FacultySeeder extends Seeder
     public function run()
     {
         $faculty = Faculty::factory()->create([
-            'department' => 'CCSIT'
+            'department' => 'CCSIT',
         ]);
 
         User::create([
             'username' => $faculty->employee_id,
             'password' => Hash::make('1234'),
             'user_id' => $faculty->id,
-            'account_type' => 3
+            'account_type' => 3,
         ]);
     }
 }

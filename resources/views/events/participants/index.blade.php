@@ -58,7 +58,7 @@
                                     <tbody>
                                     @foreach ($participants as $participant)
                                         <tr>
-                                            <td><input type="checkbox" name="participants[]" id="participants" value="{{ $participant->id }}" class="form-control"></td>
+                                            <td><input type="checkbox" name="participants[]" id="participants" value="{{ $participant->id }}"></td>
                                             <td>{{ $participant->getParticipantIdNumber() }}</td>
                                             <td>{{ $participant->getParticipantName() }}</td>
                                             <td>{{ $participant->getPrettyUserType() }}</td>
@@ -82,4 +82,29 @@
         $('#participants_table').DataTable();
     } );
 </script>
+@endsection
+
+@section('styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+@endsection
+
+@section('scripts')
+    @error('participants')
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('{{ $message }}')
+        </script>
+    @enderror
 @endsection

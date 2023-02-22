@@ -52,10 +52,10 @@ class User extends Authenticatable
     {
         if ($this->account_type == 1) {
             return Admin::find($this->user_id)->name;
-        } elseif ( $this->account_type == 2) {
+        } elseif ($this->account_type == 2) {
             return Student::find($this->user_id)->name;
         }
-        
+
         return Faculty::find($this->user_id)->name;
     }
 
@@ -63,10 +63,10 @@ class User extends Authenticatable
     {
         if ($this->account_type == 1) {
             return Admin::find($this->user_id);
-        } elseif ( $this->account_type == 2) {
+        } elseif ($this->account_type == 2) {
             return Student::find($this->user_id);
         }
-        
+
         return Faculty::find($this->user_id);
     }
 }

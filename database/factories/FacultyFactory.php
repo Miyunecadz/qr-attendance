@@ -20,8 +20,8 @@ class FacultyFactory extends Factory
             'employee_id' => rand(101, 999),
             'name' => $this->faker->name(),
             'position' => 'regular',
-            'contact_number' => rand(9000000001,9999999999),
-            'email' => $this->faker->email()
+            'contact_number' => rand(9000000001, 9999999999),
+            'email' => $this->faker->email(),
         ];
     }
 }

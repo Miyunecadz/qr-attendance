@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Student;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class StudentSeeder extends Seeder
@@ -16,14 +15,14 @@ class StudentSeeder extends Seeder
     public function run()
     {
         $student = Student::factory(2)->create([
-            'department' => 'CCSIT'
+            'department' => 'CCSIT',
         ]);
 
         \App\Models\User::create([
             'username' => $student->id_number,
             'password' => bcrypt('1234'),
             'user_id' => $student->id,
-            'account_type' => 2
+            'account_type' => 2,
         ]);
     }
 }

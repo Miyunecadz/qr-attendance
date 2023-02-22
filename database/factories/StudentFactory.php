@@ -18,11 +18,11 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            'id_number' => rand(1000000, 9999999) . '-' . rand(1,2),
+            'id_number' => rand(1000000, 9999999).'-'.rand(1, 2),
             'name' => $this->faker->name(),
-            'year_level' => rand(1,4),
+            'year_level' => rand(1, 4),
             'section' => Str::random(1),
-            'contact_number' => rand(9000000001,9999999999),
+            'contact_number' => rand(9000000001, 9999999999),
             'email' => $this->faker->email(),
         ];
     }

@@ -18,8 +18,7 @@ class EventController extends Controller
     {
         $events = Event::latest();
 
-        if(!auth()->user()->isAdmin())
-        {
+        if (! auth()->user()->isAdmin()) {
             $user = auth()->user();
             $eventIds = EventParticipant::where('user_id', $user->user_id)
                 ->where('user_type', $user->account_type)
@@ -113,15 +112,14 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
             'date' => 'required',
             'time_start' => 'required',
             'time_end' => 'required',
-           
 
         ]);
         if ($validator->fails()) {
@@ -129,22 +127,21 @@ class EventController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-            
-            $event = Event::find($id);
-            if(!$event) {
-                abort(404);
-            }
 
-            $event->update ([
-                'title' => $request->title,
-                'description' => $request->description,
-                'date' => $request->date,
-                'time_start' => $request->time_start,
-                'time_end' => $request->time_end,
-            ]);
+        $event = Event::find($id);
+        if (! $event) {
+            abort(404);
+        }
 
-                return redirect(route('events.index'))->with('success', 'Event has been successfully updated');
-               
+        $event->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'date' => $request->date,
+            'time_start' => $request->time_start,
+            'time_end' => $request->time_end,
+        ]);
+
+        return redirect(route('events.index'))->with('success', 'Event has been successfully updated');
     }
 
     /**
@@ -153,16 +150,15 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$id)
-    { 
+    public function destroy(Request $request, $id)
+    {
         $event = Event::find($id);
-        if(!$event) {
+        if (! $event) {
             abort(404);
         }
-        
+
         $event->delete();
 
         return redirect(route('events.index'))->with('success', 'Event has been successfully deleted');
-    } 
-
+    }
 }

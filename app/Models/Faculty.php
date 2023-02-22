@@ -16,6 +16,6 @@ class Faculty extends Model
         'department',
         'position',
         'contact_number',
-        'email'
+        'email',
     ];
 }
