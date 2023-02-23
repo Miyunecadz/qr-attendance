@@ -26,7 +26,7 @@ class EventController extends Controller
                 ->pluck('event_id')
                 ->toArray();
 
-            $events = $events->whereIn('id', $eventIds);
+            $events = $events->whereIn('id', $eventIds)->whereDate('date', '>=', now()->format('Y-m-d'));
         }
 
         if ($request->has('keyword') && $request->keyword != null) {
