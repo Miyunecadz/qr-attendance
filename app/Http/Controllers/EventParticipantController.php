@@ -51,9 +51,8 @@ class EventParticipantController extends Controller
     public function destroy(Request $request)
     {
         $participantIds = $request->input('participants');
-
-        if (count($participantIds) < 1) {
-            return redirect()->back()->with('error', 'At least one participant ID is required.');
+        if (!$participantIds || count($participantIds) < 1) {
+            return redirect()->back()->with('error', 'Select at least one participant ID is required.');
         }
 
         EventParticipant::whereIn('id', $participantIds)->delete();

@@ -89,7 +89,7 @@
 @endsection
 
 @section('scripts')
-    @error('participants')
+    @if($message = Session::get('error'))
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
         <script>
             toastr.options = {
