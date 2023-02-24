@@ -23,13 +23,13 @@
                 <div class="col-md-4 col-lg-3 card mx-2 p-3 bg-success text-light">
                     <div class="d-flex align-items-center">
                         <p>Event Attended</p>
-                        <h2 class="ml-auto">0</h2>
+                        <h2 class="ml-auto">{{ $eventAttendedCount }}</h2>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-3 card mx-2 p-3 bg-danger text-light">
                     <div class="d-flex align-items-center">
                         <p>Missed Attendances</p>
-                        <h2 class="ml-auto">0</h2>
+                        <h2 class="ml-auto">{{ $eventAbsentCount }}</h2>
                     </div>
                 </div>
             </div>
