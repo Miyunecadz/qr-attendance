@@ -35,23 +35,6 @@
                         {{ $event->description }}
                       </div>
                     </div>
-
-                    <div class="accordion my-3" id="accordionExample">
-                        <div class="card shadow">
-                          <div class="card-header" id="headingTwo">
-                            <h2 class="mb-0">
-                              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Participants
-                              </button>
-                            </h2>
-                          </div>
-                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                            <div class="card-body">
-                              Some placeholder content for the second accordion panel. This panel is hidden by default.
-                            </div>
-                          </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

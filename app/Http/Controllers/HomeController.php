@@ -21,6 +21,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $eventAttendedCount = 0;
+        $eventAbsentCount = 0;
+        $upcomingEvents = [];
+
+        return view('home', [
+            'eventAttendedCount' => $eventAttendedCount,
+            'eventAbsentCount' => $eventAbsentCount,
+            'upcomingEvents' => $upcomingEvents
+        ]);
     }
 }
