@@ -16,23 +16,40 @@
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-
+            @if(auth()->user()->isAdmin())
+            <div class="row">
+                <div class="col-lg-3 p-3 m-2 bg-success text-light">
+                    <div class="d-flex align-items-center">
+                        <p>Number of Events</p>
+                        <h2 class="ml-auto">{{ $numberOfEvents }}</h2>
+                    </div>
+                </div>
+                <div class="col-lg-3 p-3 m-2 bg-danger text-light">
+                    <div class="d-flex align-items-center">
+                        <p>Number of Users</p>
+                        <h2 class="ml-auto">{{ $numberOfUsers }}</h2>
+                    </div>
+                </div>
+            </div>
+            @endif
 
             @if(!auth()->user()->isAdmin())
             <div class="row">
-                <div class="col-md-4 col-lg-3 card mx-2 p-3 bg-success text-light">
+                <div class="col-md-4 col-lg-3 card m-2 p-3 bg-success text-light">
                     <div class="d-flex align-items-center">
                         <p>Event Attended</p>
                         <h2 class="ml-auto">{{ $eventAttendedCount }}</h2>
                     </div>
                 </div>
-                <div class="col-md-4 col-lg-3 card mx-2 p-3 bg-danger text-light">
+                <div class="col-md-4 col-lg-3 card m-2 p-3 bg-danger text-light">
                     <div class="d-flex align-items-center">
                         <p>Missed Attendances</p>
                         <h2 class="ml-auto">{{ $eventAbsentCount }}</h2>
                     </div>
                 </div>
             </div>
+            @endif
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -65,7 +82,6 @@
                     </div>
                 </div>
             </div>
-            @endif
         </div>
     </div>
 @endsection

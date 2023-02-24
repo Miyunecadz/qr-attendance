@@ -23,11 +23,15 @@ class HomeController extends Controller
     {
         $eventAttendedCount = 0;
         $eventAbsentCount = 0;
+        $numberOfEvents = 0;
+        $numberOfUsers = 0;
         $upcomingEvents = [];
 
         return view('home', [
             'eventAttendedCount' => $eventAttendedCount,
             'eventAbsentCount' => $eventAbsentCount,
+            'numberOfEvents' => $numberOfEvents,
+            'numberOfUsers'  => $numberOfUsers,
             'upcomingEvents' => $upcomingEvents
         ]);
     }
