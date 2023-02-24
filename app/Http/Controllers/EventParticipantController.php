@@ -23,7 +23,25 @@ class EventParticipantController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        $participants = $request->input('participants');
+
+        if (count($participants) < 1) {
+            return redirect()->back()->with('error', 'Must select at least one participant.')->withInput();
+        }
+
+        foreach ($participants as $participant) {
+            $data = explode('-', $participant);
+            $user_id = $data[0];
+            $user_type = $data[1];
+
+            $eventParticipant = new EventParticipant;
+            $eventParticipant->event_id = $request->event;
+            $eventParticipant->user_id = $user_id;
+            $eventParticipant->user_type = $user_type;
+            $eventParticipant->save();
+        }
+
+        return redirect()->route('events.participants.index', $request->event)->with('success', 'Successfully added participants.');
     }
 
     public function destroy(Request $request)
