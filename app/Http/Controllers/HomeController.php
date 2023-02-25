@@ -31,8 +31,8 @@ class HomeController extends Controller
             'eventAttendedCount' => $eventAttendedCount,
             'eventAbsentCount' => $eventAbsentCount,
             'numberOfEvents' => $numberOfEvents,
-            'numberOfUsers'  => $numberOfUsers,
-            'upcomingEvents' => $upcomingEvents
+            'numberOfUsers' => $numberOfUsers,
+            'upcomingEvents' => $upcomingEvents,
         ]);
     }
 }
