@@ -71,6 +71,7 @@
                                             <small>-</small>
                                             <small class="ml-1">{{ Carbon\Carbon::parse($event->time_end)->format('h:i A') }}</small>
                                         </div>
+                                        <a href="{{ route('events.show', ['event' => $event->id]) }}" class="stretched-link"></a>
                                     </div>
                                 @empty
                                     <div class="d-flex h-100 w-100 justify-content-center align-items-center">
