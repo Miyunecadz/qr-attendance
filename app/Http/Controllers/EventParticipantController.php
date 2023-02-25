@@ -38,17 +38,17 @@ class EventParticipantController extends Controller
         ->union($faculties)
         ->get()
         ->whereNotIn('id', $participants->where('user_type', 2  )->pluck('user_id')->all());
-        
+
         $participants = $students;
         return view('events.participants.create', compact('participants'));
     }
 
     public function store(Request $request)
     {
-        $participants = $request->input('participants');
 
-        if (count($participants) < 1) {
-            return redirect()->back()->with('error', 'Must select at least one participant.')->withInput();
+        $participants = $request->input('participants');
+        if (!is_array($participants) || count($participants) < 1) {
+            return redirect()->back()->withErrors(['participants' => 'Must select at least one participant.']);
         }
 
         foreach ($participants as $participant) {
@@ -62,7 +62,6 @@ class EventParticipantController extends Controller
             $eventParticipant->user_type = $user_type;
             $eventParticipant->save();
         }
-
         return redirect()->route('events.participants.index', $request->event)->with('success', 'Successfully added participants.');
     }
 
