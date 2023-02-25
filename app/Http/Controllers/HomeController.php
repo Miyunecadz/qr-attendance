@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
+use App\Models\EventParticipant;
+use App\Models\Student;
+use App\Models\User;
 class HomeController extends Controller
 {
     /**
@@ -27,6 +31,20 @@ class HomeController extends Controller
         $numberOfUsers = 0;
         $upcomingEvents = [];
 
+        if(! auth()->user()->isAdmin()){
+
+            $eventAttendedCount = EventParticipant::where('is_present', true)->count();
+            $eventAbsentCount = EventParticipant::where('is_present', false)->count();
+            $upcomingEvents = Event::whereDate('date', '>=', now()->format('Y-m-d'))->get();
+        } 
+        if(auth()->user()->isAdmin()){
+
+            $numberOfEvents = Event::count();
+            $numberOfUsers = EventParticipant::where('user_type', '!=', '1')->count();
+            $upcomingEvents = Event::whereDate('date','>=', now()->format('Y-m-d'))->get();
+        } 
+
+
         return view('home', [
             'eventAttendedCount' => $eventAttendedCount,
             'eventAbsentCount' => $eventAbsentCount,
@@ -34,5 +52,6 @@ class HomeController extends Controller
             'numberOfUsers' => $numberOfUsers,
             'upcomingEvents' => $upcomingEvents,
         ]);
+       
     }
 }
