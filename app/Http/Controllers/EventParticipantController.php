@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EventParticipant;
 use App\Models\Faculty;
 use App\Models\Student;
 use Illuminate\Http\Request;
-use App\Models\EventParticipant;
 use Illuminate\Support\Facades\DB;
 
 class EventParticipantController extends Controller
@@ -25,7 +25,7 @@ class EventParticipantController extends Controller
             'employee_id as id_number',
             'name',
             'department',
-            DB::raw('(CASE WHEN faculties.id > 0 THEN 3 END) as user_type')
+            DB::raw('(CASE WHEN faculties.id > 0 THEN 3 END) as user_type'),
         ])->whereNotIn('id', $participants->where('user_type', 3)->pluck('user_id')->all());
 
         $students = Student::select([
@@ -33,42 +33,42 @@ class EventParticipantController extends Controller
             'id_number',
             'name',
             'department',
-            DB::raw('(CASE WHEN students.id > 0 THEN 2 END) as user_type')
+            DB::raw('(CASE WHEN students.id > 0 THEN 2 END) as user_type'),
         ])
+        ->whereNotIn('id', $participants->where('user_type', 2)->pluck('user_id')->all())
         ->union($faculties)
-        ->get()
-        ->whereNotIn('id', $participants->where('user_type', 2  )->pluck('user_id')->all());
-
+        ->get();
         $participants = $students;
+
         return view('events.participants.create', compact('participants'));
     }
 
     public function store(Request $request)
     {
-
-        $participants = $request->input('participants');
-        if (!is_array($participants) || count($participants) < 1) {
+        if (! $request->has('participants')) {
             return redirect()->back()->withErrors(['participants' => 'Must select at least one participant.']);
         }
 
-        foreach ($participants as $participant) {
-            $data = explode('-', $participant);
-            $user_id = $data[0];
-            $user_type = $data[1];
+        $participants = collect($request->participants)->map(function ($value) use ($request) {
+            $datum = explode('-', $value);
+            $participant['event_id'] = $request->event;
+            $participant['user_id'] = $datum[0];
+            $participant['user_type'] = $datum[1];
+            $participant['created_at'] = now();
+            $participant['updated_at'] = now();
 
-            $eventParticipant = new EventParticipant;
-            $eventParticipant->event_id = $request->event;
-            $eventParticipant->user_id = $user_id;
-            $eventParticipant->user_type = $user_type;
-            $eventParticipant->save();
-        }
-        return redirect()->route('events.participants.index', $request->event)->with('success', 'Successfully added participants.');
+            return $participant;
+        });
+
+        EventParticipant::insert($participants->all());
+
+        return redirect()->route('event-participants.index', ['event' => $request->event])->with('success', 'Successfully added participants.');
     }
 
     public function destroy(Request $request)
     {
         $participantIds = $request->input('participants');
-        if (!$participantIds || count($participantIds) < 1) {
+        if (! $participantIds || count($participantIds) < 1) {
             return redirect()->back()->with('error', 'Select at least one participant ID is required.');
         }
 
