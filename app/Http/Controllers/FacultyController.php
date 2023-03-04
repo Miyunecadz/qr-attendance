@@ -171,7 +171,7 @@ class FacultyController extends Controller
      */
     public function qrcode(Faculty $faculty)
     {
-        $qrcode = Crypt::encryptString($faculty->employee_id);
+        $qrcode = Crypt::encryptString($faculty->id.'-3');
 
         return view('users.qr', [
             'qrcode' => $qrcode,

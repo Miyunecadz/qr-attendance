@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\AttendanceReportController;
+use App\Http\Controllers\EventBacklogController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventParticipantController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ScanController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::get('events/{event}/participants/create', [EventParticipantController::class, 'create'])->name('event-participants.create');
     Route::post('events/{event}/participants', [EventParticipantController::class, 'store'])->name('event-participants.store');
     Route::delete('events/{event}/participants', [EventParticipantController::class, 'destroy'])->name('event-participants.destroy');
+    Route::get('events/{event}/scan', [ScanController::class, 'index'])->name('scan.index');
+    Route::post('events/{event}/scan', [ScanController::class, 'store'])->name('scan.store');
+    Route::get('/scan/{qrcode}', [ScanController::class, 'show'])->name('scan.show');
+    Route::get('attendance-report', AttendanceReportController::class)->name('attendance.report');
+    Route::get('events-report', EventBacklogController::class)->name('report.event');
 });
 
 Route::get('/offline', function () {

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventParticipant;
-use App\Models\Student;
 use App\Models\User;
+
 class HomeController extends Controller
 {
     /**
@@ -31,34 +31,29 @@ class HomeController extends Controller
         $numberOfUsers = 0;
         $upcomingEvents = [];
 
-        if(! auth()->user()->isAdmin()){
-
+        if (! auth()->user()->isAdmin()) {
             $user = auth()->user();
             $eventAttendedCount = EventParticipant::where('is_present', true)
             ->where('user_id', auth()->user()->user_id)
-            ->where('user_type', auth()->user()->account_type )
+            ->where('user_type', auth()->user()->account_type)
             ->count();
 
             $eventAbsentCount = EventParticipant::where('is_present', false)
             ->where('user_id', auth()->user()->user_id)
-            ->where('user_type', auth()->user()->account_type )
+            ->where('user_type', auth()->user()->account_type)
             ->count();
 
             $upcomingEvents = Event::join('event_participants', 'events.id', '=', 'event_participants.event_id')
             ->whereDate('date', '>=', now()->format('Y-m-d'))
             ->where('user_id', auth()->user()->user_id)
-            ->where('user_type', auth()->user()->account_type )
+            ->where('user_type', auth()->user()->account_type)
             ->get();
-
-
-        } 
-        if(auth()->user()->isAdmin()){
-
+        }
+        if (auth()->user()->isAdmin()) {
             $numberOfEvents = Event::count();
-            $numberOfUsers = EventParticipant::where('user_type', '!=', '1')->count();
-            $upcomingEvents = Event::whereDate('date','>=', now()->format('Y-m-d'))->get();
-        } 
-
+            $numberOfUsers = User::where('account_type', '!=', '1')->count();
+            $upcomingEvents = Event::whereDate('date', '>=', now()->format('Y-m-d'))->get();
+        }
 
         return view('home', [
             'eventAttendedCount' => $eventAttendedCount,
@@ -67,6 +62,5 @@ class HomeController extends Controller
             'numberOfUsers' => $numberOfUsers,
             'upcomingEvents' => $upcomingEvents,
         ]);
-       
     }
 }

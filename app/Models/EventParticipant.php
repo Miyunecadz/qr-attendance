@@ -52,4 +52,13 @@ class EventParticipant extends Model
 
         return 'Faculty';
     }
+
+    public function getPrettyStatus()
+    {
+        if ($this->is_present) {
+            return 'Present';
+        }
+
+        return 'Absent';
+    }
 }

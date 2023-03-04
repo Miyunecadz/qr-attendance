@@ -75,6 +75,9 @@
                                                 <a href="{{ route('event-participants.index', ['event' => $event]) }}" class="btn btn-sm btn-success mx-1" title="Manage participant">
                                                     <i class="fas fa-users"></i>
                                                 </a>
+                                                <a href="{{ route('scan.index', ['event' => $event]) }}" class="btn btn-sm btn-primary mx-1" title="Scan QRCode">
+                                                    <i class="fa fa-camera"></i>
+                                                </a>
                                                 <a href="{{ route('events.edit', ['event' => $event]) }}" class="btn btn-sm btn-warning mx-1">
                                                     <i class="fas fa-pen"></i>
                                                 </a>

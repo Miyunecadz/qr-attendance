@@ -23,7 +23,7 @@
             @if(!request()->routeIs('profile.*'))
                 <li class="nav-item">
                     <a href="{{ route('events.index') }}" class="nav-link  @if(request()->routeIs('events.*')) active @endif">
-                        <i class="fas fa-calendar-alt pl-1 pr-2"></i>
+                        <i class="nav-icon fas fa-calendar-alt pl-1 pr-2"></i>
                         <p>
                             {{ __('Manage Events') }}
                         </p>
@@ -31,6 +31,7 @@
                 </li>
 
                 @if(auth()->user()->isAdmin())
+                    
                     <li class="nav-item @if(request()->routeIs('students.*')|| request()->routeIs('faculties.*')) menu-is-opening menu-open @endif">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
@@ -54,7 +55,29 @@
                             </li>
                         </ul>
                     </li>
-
+                    <li class="nav-item @if(request()->routeIs('attendance.report') || request()->routeIs('report.event')) menu-is-opening menu-open @endif">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-chart-bar"></i>
+                            <p>
+                                {{ __('Generate Report') }}
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview" style="display: @if(request()->routeIs('attendance.report') || request()->routeIs('report.event')) block @else none @endif;">
+                            <li class="nav-item">
+                                <a href="{{ route('attendance.report') }}" class="nav-link @if(request()->routeIs('attendance.report')) active @endif">
+                                    <i class="nav-icon fas fa-user-check"></i>
+                                    <p>Attendance Report</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('report.event') }}" class="nav-link @if(request()->routeIs('report.event')) active @endif">
+                                    <i class="nav-icon far fa-calendar"></i>
+                                    <p>Event Backlog</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 @endif
             @else
                 <li class="nav-item">

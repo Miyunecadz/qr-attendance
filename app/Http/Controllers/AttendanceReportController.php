@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use Illuminate\Http\Request;
 use App\Models\EventParticipant;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AttendanceReportController extends Controller
@@ -14,7 +14,7 @@ class AttendanceReportController extends Controller
         $events = Event::select(['id', 'title'])->get();
         $participants = [];
         $participantAbsentCount = $participantPresentCount = 0;
-        if($request->has('event')) {
+        if ($request->has('event')) {
             $studentParticipants = EventParticipant::leftJoin('students', 'event_participants.user_id', '=', 'students.id')
                 ->select([
                     'id_number',
@@ -36,20 +36,20 @@ class AttendanceReportController extends Controller
                 ])
                 ->where('event_id', $request->event)
                 ->where('user_type', 3);
-            
+
             $participants = $facultyParticipants->union($studentParticipants)
                 ->get()
                 // ->where('is_present', true)
                 ->groupBy('department');
 
-            $participantPresentCount = $participants->map(function($value, $key){
-                return $value->filter(function($value, $key) {
+            $participantPresentCount = $participants->map(function ($value, $key) {
+                return $value->filter(function ($value, $key) {
                     return $value->is_present == true;
                 })->count();
             });
 
-            $participantAbsentCount = $participants->map(function($value, $key){
-                return $value->filter(function($value, $key) {
+            $participantAbsentCount = $participants->map(function ($value, $key) {
+                return $value->filter(function ($value, $key) {
                     return $value->is_present == false;
                 })->count();
             });
