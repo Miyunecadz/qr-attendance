@@ -30,6 +30,17 @@
                     </a>
                 </li>
 
+                @if(!auth()->user()->isAdmin())
+                    <li class="nav-item">
+                        <a href="{{ route('redirect') }}" class="nav-link  @if(request()->routeIs('faculties.attendance') || request()->routeIs('students.attendance')) active @endif">
+                            <i class="nav-icon fas fa-calendar-alt pl-1 pr-2"></i>
+                            <p>
+                                {{ __('My Attendance') }}
+                            </p>
+                        </a>
+                    </li>
+                @endif
+
                 @if(auth()->user()->isAdmin())
                     
                     <li class="nav-item @if(request()->routeIs('students.*')|| request()->routeIs('faculties.*')) menu-is-opening menu-open @endif">

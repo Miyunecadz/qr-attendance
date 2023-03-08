@@ -56,9 +56,42 @@
                         <div class="card-body">
                             <div class="d-flex">
                                 <h4 class="card-text">
-                                    {{ __("Upcoming Events") }}
+                                    {{ __("Todays Events") }}
                                 </h4>
                                 <a href="{{route('events.index')}}" class="ml-auto">View Events</a>
+                            </div>
+                            <hr>
+                            <div class="lists">
+                                @forelse ($todayEvents as $event)
+                                    <div class="card p-2">
+                                        <h5>{{ Str::title($event->title) }}</h5>
+                                        <small>{{ Carbon\Carbon::parse($event->date)->format('Y-m-d') }}</small>
+                                        <div class="d-flex">
+                                            <small class="mr-1">{{ Carbon\Carbon::parse($event->time_start)->format('h:i A') }}</small>
+                                            <small>-</small>
+                                            <small class="ml-1">{{ Carbon\Carbon::parse($event->time_end)->format('h:i A') }}</small>
+                                        </div>
+                                        <a href="{{ route('events.show', ['event' => $event->id]) }}" class="stretched-link"></a>
+                                    </div>
+                                @empty
+                                    <div class="d-flex h-100 w-100 justify-content-center align-items-center">
+                                        No Event
+                                    </div>
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <h4 class="card-text">
+                                    {{ __("Upcoming Events") }}
+                                </h4>
                             </div>
                             <hr>
                             <div class="lists">

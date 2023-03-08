@@ -24,12 +24,15 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/redirect', [App\Http\Controllers\HomeController::class, 'redirect'])->name('redirect');
     Route::view('about', 'about')->name('about');
     Route::resource('events', EventController::class);
     Route::resource('students', StudentController::class);
     Route::resource('faculties', FacultyController::class);
     Route::get('/faculties/{faculty}/qrcode', [FacultyController::class, 'qrcode'])->name('faculties.qr');
+    Route::get('/faculties/{faculty}/attendance', [FacultyController::class, 'attendance'])->name('faculties.attendance');
     Route::get('/students/{student}/qrcode', [StudentController::class, 'qrcode'])->name('students.qr');
+    Route::get('/students/{student}/attendance', [StudentController::class, 'attendance'])->name('students.attendance');
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');

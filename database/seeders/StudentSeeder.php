@@ -15,6 +15,7 @@ class StudentSeeder extends Seeder
     public function run()
     {
         $student = Student::factory()->create([
+            'id_number' => '123456-1',
             'department' => 'CCSIT',
         ]);
 

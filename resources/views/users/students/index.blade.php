@@ -66,9 +66,9 @@
                                             <a href="{{ route('students.qr', ['student' => $student]) }}" class="btn btn-sm btn-primary mx-1" title="Show Qr">
                                                 <i class="fas fa-qrcode"></i>
                                             </a>
-                                            {{-- <a href="{{ route('students.show', ['student' => $student]) }}" class="btn btn-sm btn-primary mx-1" title="Show">
+                                            <a href="{{ route('students.attendance', ['student' => $student]) }}" class="btn btn-sm btn-primary mx-1" title="Show Attendance">
                                                 <i class="fas fa-eye"></i>
-                                            </a> --}}
+                                            </a>
                                             <a href="{{ route('students.edit', ['student' => $student]) }}" class="btn btn-sm btn-warning mx-1">
                                                 <i class="fas fa-pen"></i>
                                             </a>

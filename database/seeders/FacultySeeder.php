@@ -17,6 +17,7 @@ class FacultySeeder extends Seeder
     public function run()
     {
         $faculty = Faculty::factory()->create([
+            'employee_id' => '123',
             'department' => 'CCSIT',
         ]);
 

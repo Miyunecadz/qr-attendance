@@ -29,6 +29,7 @@ class HomeController extends Controller
         $eventAbsentCount = 0;
         $numberOfEvents = 0;
         $numberOfUsers = 0;
+        $todayEvents = [];
         $upcomingEvents = [];
 
         if (! auth()->user()->isAdmin()) {
@@ -38,13 +39,29 @@ class HomeController extends Controller
             ->where('user_type', auth()->user()->account_type)
             ->count();
 
-            $eventAbsentCount = EventParticipant::where('is_present', false)
+            $eventAbsentCount = EventParticipant::leftJoin('events', 'event_participants.event_id', '=', 'events.id')
+            ->where('is_present', false)
             ->where('user_id', auth()->user()->user_id)
             ->where('user_type', auth()->user()->account_type)
+            ->whereDate('date', '<', now()->format('Y-m-d'))
             ->count();
 
+            $todayEvents = Event::join('event_participants', 'events.id', '=', 'event_participants.event_id')
+            ->select([
+                'events.id as id',
+                'title',
+                'date',
+                'time_start',
+                'time_end',
+                'description',
+            ])
+            ->whereDate('date', now()->format('Y-m-d'))
+            ->where('user_id', auth()->user()->user_id)
+            ->where('user_type', auth()->user()->account_type)
+            ->get();
+
             $upcomingEvents = Event::join('event_participants', 'events.id', '=', 'event_participants.event_id')
-            ->whereDate('date', '>=', now()->format('Y-m-d'))
+            ->whereDate('date', '>', now()->format('Y-m-d'))
             ->where('user_id', auth()->user()->user_id)
             ->where('user_type', auth()->user()->account_type)
             ->get();
@@ -60,7 +77,19 @@ class HomeController extends Controller
             'eventAbsentCount' => $eventAbsentCount,
             'numberOfEvents' => $numberOfEvents,
             'numberOfUsers' => $numberOfUsers,
+            'todayEvents' => $todayEvents,
             'upcomingEvents' => $upcomingEvents,
         ]);
+    }
+
+    public function redirect()
+    {
+        $user = auth()->user();
+
+        if($user->account_type == 2) {
+            return redirect(route('students.attendance', ['student' => $user->user_id]));
+        }
+
+        return redirect(route('faculties.attendance', ['faculty' => $user->user_id]));
     }
 }

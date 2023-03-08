@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EventParticipant;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -182,5 +183,25 @@ class StudentController extends Controller
             'qrcode' => $qrcode,
             'user' => $student,
         ]);
+    }
+
+    public function attendance(Student $student)
+    {
+        $attendances = EventParticipant::leftJoin('events', 'event_participants.event_id', '=', 'events.id')
+            ->where('user_id', $student->id)
+            ->where('user_type', 2)
+            ->select([
+                'events.id',
+                'events.title',
+                'events.date',
+                'events.time_start',
+                'events.time_end',
+                'time_in',
+                'time_out',
+                'is_present',
+            ])
+            ->get();
+
+        return view('users.students.attendance', compact('attendances'));
     }
 }

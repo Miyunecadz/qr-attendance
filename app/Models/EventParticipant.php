@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EventParticipant extends Model
 {
@@ -16,6 +17,11 @@ class EventParticipant extends Model
         'time_in',
         'time_out',
     ];
+
+    public function event() : BelongsTo
+    {
+        return $this->belongsTo(Event::class);
+    }
 
     public function getParticipantIdNumber()
     {

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Faculty;
 use App\Models\User;
+use App\Models\Faculty;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\EventParticipant;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class FacultyController extends Controller
 {
@@ -177,5 +178,25 @@ class FacultyController extends Controller
             'qrcode' => $qrcode,
             'user' => $faculty,
         ]);
+    }
+
+    public function attendance(Faculty $faculty)
+    {
+        $attendances = EventParticipant::leftJoin('events', 'event_participants.event_id', '=', 'events.id')
+            ->where('user_id', $faculty->id)
+            ->where('user_type', 3)
+            ->select([
+                'events.id',
+                'events.title',
+                'events.date',
+                'events.time_start',
+                'events.time_end',
+                'time_in',
+                'time_out',
+                'is_present',
+            ])
+            ->get();
+
+        return view('users.faculties.attendance', compact('attendances'));
     }
 }
