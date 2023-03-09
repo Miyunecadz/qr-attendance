@@ -61,7 +61,7 @@ class HomeController extends Controller
             ->get();
 
             $upcomingEvents = Event::join('event_participants', 'events.id', '=', 'event_participants.event_id')
-            ->whereDate('date', '>', now()->format('Y-m-d'))
+            ->whereDate('date', '>', now('Asia/Singapore')->format('Y-m-d'))
             ->where('user_id', auth()->user()->user_id)
             ->where('user_type', auth()->user()->account_type)
             ->get();
