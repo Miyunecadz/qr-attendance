@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Event;
 use App\Models\Faculty;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -182,7 +183,7 @@ class FacultyController extends Controller
 
     public function attendance(Faculty $faculty)
     {
-        $attendances = EventParticipant::leftJoin('events', 'event_participants.event_id', '=', 'events.id')
+        $attendances = Event::leftJoin('event_participants', 'event_participants.event_id', '=', 'events.id')
             ->where('user_id', $faculty->id)
             ->where('user_type', 3)
             ->select([
@@ -195,6 +196,7 @@ class FacultyController extends Controller
                 'time_out',
                 'is_present',
             ])
+            ->withoutTrashed('events.deleted_at')
             ->get();
 
         return view('users.faculties.attendance', compact('attendances'));

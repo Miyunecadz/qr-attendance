@@ -21,6 +21,7 @@ return new class extends Migration
             $table->dateTime('time_in')->nullable();
             $table->dateTime('time_out')->nullable();
             $table->tinyInteger('is_present')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

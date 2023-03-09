@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EventParticipant;
-use App\Models\Student;
 use App\Models\User;
+use App\Models\Event;
+use App\Models\Student;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\EventParticipant;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class StudentController extends Controller
 {
@@ -187,7 +188,7 @@ class StudentController extends Controller
 
     public function attendance(Student $student)
     {
-        $attendances = EventParticipant::leftJoin('events', 'event_participants.event_id', '=', 'events.id')
+        $attendances = Event::leftJoin('event_participants', 'event_participants.event_id', '=', 'events.id')
             ->where('user_id', $student->id)
             ->where('user_type', 2)
             ->select([
@@ -200,6 +201,7 @@ class StudentController extends Controller
                 'event_participants.time_out',
                 'is_present',
             ])
+            ->withoutTrashed('events.deleted_at')
             ->get();
 
         return view('users.students.attendance', compact('attendances'));
