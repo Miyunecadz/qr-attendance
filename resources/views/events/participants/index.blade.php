@@ -53,6 +53,7 @@
                                             <th>Department</th>
                                             <th>Logged In</th>
                                             <th>Logged Out</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -65,6 +66,7 @@
                                             <td>{{ Str::upper($participant->getParticipantDepartment()) }}</td>
                                             <td>{{ $participant->time_in }}</td>
                                             <td>{{ $participant->time_out }}</td>
+                                            <td>{{ $participant->getPrettyStatus() }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->smallInteger('user_type');
             $table->dateTime('time_in')->nullable();
             $table->dateTime('time_out')->nullable();
-            $table->boolean('is_present')->default(false);
+            $table->tinyInteger('is_present')->default(0);
             $table->timestamps();
         });
     }

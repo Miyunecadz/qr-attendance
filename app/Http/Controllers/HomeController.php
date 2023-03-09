@@ -34,13 +34,13 @@ class HomeController extends Controller
 
         if (! auth()->user()->isAdmin()) {
             $user = auth()->user();
-            $eventAttendedCount = EventParticipant::where('is_present', true)
+            $eventAttendedCount = EventParticipant::where('is_present', 2)
             ->where('user_id', auth()->user()->user_id)
             ->where('user_type', auth()->user()->account_type)
             ->count();
 
             $eventAbsentCount = EventParticipant::leftJoin('events', 'event_participants.event_id', '=', 'events.id')
-            ->where('is_present', false)
+            ->where('is_present', 0)
             ->where('user_id', auth()->user()->user_id)
             ->where('user_type', auth()->user()->account_type)
             ->whereDate('date', '<', now()->format('Y-m-d'))

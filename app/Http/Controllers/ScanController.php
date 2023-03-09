@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\EventParticipant;
 use App\Models\Faculty;
 use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -73,24 +74,36 @@ class ScanController extends Controller
 
         $event = Event::find($request->event);
 
-        $action = '';
-        if (! $participant->time_in && $event->time_start <= now()->addHour()->format('H:i:s')) {
-            $action = 'time in';
-            $participant->update([
-                'time_in' => now()->format('Y-m-d H:i:s'),
-            ]);
-        } elseif (! $participant->time_out && $event->time_end <= now()->addHour()->format('H:i:s')) {
-            $action = 'time out';
-            $participant->update([
-                'time_out' => now()->format('Y-m-d H:i:s'),
-                'is_present' => true,
-            ]);
-        } elseif ($participant->time_in && $participant->time_out) {
-            return back()->with('fail', 'Participant has already logged in / logged out');
-        } else {
-            return back()->with('fail', 'Unable to proceed to the process, since participant failed to comply the given time of login / logout');
+        if($event->date != now('Asia/Singapore')->format('Y-m-d')) {
+            return back()->with('fail', 'Unable to proceed to the process, since event date does not match the todays date');
         }
 
-        return back()->with('success', "Participant successfully $action");
+        $timeNow = now('Asia/Singapore')->format('Y-m-d H:i:s');
+
+        if($participant->is_present == 0) {
+            if($timeNow <= Carbon::parse($event->date .' '. $event->time_start)->addHour()->format('Y-m-d H:i:s')) {
+                $participant->update([
+                    'time_in' => now('Asia/Singapore')->format('Y-m-d H:i:s'),
+                    'is_present' => 1
+                ]);
+
+                return back()->with('success', 'Participant successfully logged in');
+            } else {
+                return back()->with('fail', 'Unable to proceed to the process, since participant failed to comply the given time of login');
+            }
+        } elseif($participant->is_present == 1) {
+            if($timeNow <= Carbon::parse($event->date .' '. $event->time_end)->addHour()->format('Y-m-d H:i:s')) {
+                $participant->update([
+                    'time_out' => now('Asia/Singapore')->format('Y-m-d H:i:s'),
+                    'is_present' => 2,
+                ]);
+
+                return back()->with('success', 'Participant successfully logged out');
+            } else {
+                return back()->with('fail', 'Unable to proceed to the process, since participant failed to comply the given time of logout');
+            }
+        }
+
+        return back()->with('success', "Participant has already attended the event");
     }
 }

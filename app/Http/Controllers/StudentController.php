@@ -196,8 +196,8 @@ class StudentController extends Controller
                 'events.date',
                 'events.time_start',
                 'events.time_end',
-                'time_in',
-                'time_out',
+                'event_participants.time_in',
+                'event_participants.time_out',
                 'is_present',
             ])
             ->get();

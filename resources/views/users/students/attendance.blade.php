@@ -45,8 +45,8 @@
                                         <td>{{ Str::title($attendance->title) }}</td>
                                         <td>{{ Carbon\Carbon::parse($attendance->date)->format('Y-m-d') }}</td>
                                         <td>{{ Carbon\Carbon::parse($attendance->time_start)->format('h:i A') }} - {{ Carbon\Carbon::parse($attendance->time_end)->format('h:i A') }}</td>
-                                        <td>{{ Carbon\Carbon::parse($attendance->time_in)->format('h:i A') }}</td>
-                                        <td>{{ Carbon\Carbon::parse($attendance->time_out)->format('h:i A') }}</td>
+                                        <td>{{ $attendance->time_in ? Carbon\Carbon::parse($attendance->time_in)->format('h:i A'): null }}</td>
+                                        <td>{{ $attendance->time_out ? Carbon\Carbon::parse($attendance->time_out)->format('h:i A'): null }}</td>
                                         <td>{{ Str::title($attendance->getPrettyStatus()) }}</td>
                                     </tr>
                                 @endforeach

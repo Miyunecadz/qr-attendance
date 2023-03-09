@@ -16,6 +16,7 @@ class EventParticipant extends Model
         'user_type',
         'time_in',
         'time_out',
+        'is_present',
     ];
 
     public function event() : BelongsTo
@@ -61,7 +62,9 @@ class EventParticipant extends Model
 
     public function getPrettyStatus()
     {
-        if ($this->is_present) {
+        if ($this->is_present == 1) {
+            return 'Time in only';
+        } elseif ($this->is_present == 2) {
             return 'Present';
         }
 
