@@ -152,7 +152,8 @@
                     }
                 })
                 .catch(function (error) {
-                    // handle error
+                    cancelProcess()
+
                     console.log(error);
                 }); 
         }
