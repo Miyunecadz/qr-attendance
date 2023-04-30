@@ -1,0 +1,9 @@
+# -- Aliases ------------------------------------------
+alias pa="php artisan"
+alias pag="php artisan migrate"
+alias pads="php artisan db:seed"
+alias pagf="php artisan migrate:fresh"
+alias psalm="vendor/bin/psalm --no-file-cache --threads=1 --no-diff --show-info=true --find-unused-psalm-suppress --long-progress"
+alias com="composer"
+alias test="php artisan test"
+alias routes="php artisan route:list --columns=Name,Method,URI,Middleware"
