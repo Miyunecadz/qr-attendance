@@ -7,6 +7,7 @@ services:
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
+        image: sail-8.2/app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -20,7 +21,7 @@ services:
         volumes:
             - '.:/var/www/html'
         networks:
-            - app
+            - qr_attendance
         depends_on:
             - mysql
     mysql:
@@ -35,10 +36,10 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - 'app-mysql:/var/lib/mysql'
+            - 'qr_attendance-mysql:/var/lib/mysql'
             - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
         networks:
-            - app
+            - qr_attendance
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
@@ -54,7 +55,7 @@ services:
             PMA_USER: ${DB_USERNAME}
             PMA_PASSWORD: ${DB_PASSWORD}
         networks:
-            - app
+            - qr_attendance
 
     mailhog:
         image: mailhog/mailhog
@@ -62,11 +63,10 @@ services:
         ports:
         - "8025:8025"
         networks:
-            - app
-
+            - qr_attendance
 networks:
-    app:
+    qr_attendance:
         driver: bridge
 volumes:
-    app-mysql:
+    qr_attendance-mysql:
         driver: local
