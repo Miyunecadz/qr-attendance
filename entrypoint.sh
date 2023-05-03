@@ -25,11 +25,6 @@ sed -i "s@MAIL_HOST=.*@MAIL_HOST=${MAIL_HOST}@g" .env
 sed -i "s/MAIL_PORT=.*/MAIL_PORT=${MAIL_PORT}/g" .env
 sed -i "s/MAIL_FROM_ADDRESS=.*/MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}/g" .env
 sed -i "s/MAIL_FROM_NAME=.*/MAIL_FROM_NAME=${MAIL_FROM_NAME}/g" .env
-sed -i "s/JWT_ALGO=.*/JWT_ALGO=${JWT_ALGO}/g" .env
-sed -i "s/JWT_SECRET=.*/JWT_SECRET=${JWT_SECRET}/g" .env
-sed -i "s@L5_SWAGGER_CONST_HOST=.*@L5_SWAGGER_CONST_HOST=${L5_SWAGGER_CONST_HOST}@g" .env
-sed -i "s/L5_SWAGGER_GENERATE_ALWAYS=.*/L5_SWAGGER_GENERATE_ALWAYS=${L5_SWAGGER_GENERATE_ALWAYS}/g" .env
-sed -i "s/L5_SWAGGER_UI_PERSIST_AUTHORIZATION=.*/L5_SWAGGER_UI_PERSIST_AUTHORIZATION=${L5_SWAGGER_UI_PERSIST_AUTHORIZATION}/g" .env
 sed -i "s@SHIFTER_API_URL=.*@SHIFTER_API_URL=${SHIFTER_API_URL}@g" .env
 sed -i "s@VITE_SHIFTER_ID=.*@VITE_SHIFTER_ID=${VITE_SHIFTER_ID}@g" .env
 sed -i "s@VITE_SHIFTER_USERNAME=.*@VITE_SHIFTER_USERNAME=${VITE_SHIFTER_USERNAME}@g" .env
@@ -47,12 +42,6 @@ echo ----- Migration
 php artisan migrate --isolated --force
 php artisan db:seed --force
 
-# Swagger
-echo ----- Swagger
-if [ "$APP_ENV" != "production" ]; then
-    # Ignore production / staging
-    php artisan l5-swagger:generate
-fi
 
 # Run apache
 echo ----- Run apache
