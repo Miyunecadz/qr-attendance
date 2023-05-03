@@ -6,6 +6,7 @@ FROM php:8.1.13-apache
 RUN apt update \
     && apt install -y g++ zip git \
     && apt install -y zlib1g-dev libicu-dev libzip-dev libonig-dev libpng-dev \
+    && apt install curl build-essential openssl libssl-dev \
     && docker-php-ext-install intl opcache \
     && docker-php-ext-install pdo mysqli pdo_mysql \
     && pecl install apcu \
@@ -17,7 +18,12 @@ RUN apt update \
     && docker-php-ext-install iconv \
     && docker-php-ext-enable mbstring \
     && a2enmod rewrite \
-    && a2enmod headers
+    && a2enmod headers \
+    && git clone https://github.com/nodejs/node.git \
+    && cd node \
+    && ./configure \
+    && make \
+    && sudo make install
 
 WORKDIR /var/www/html
 
