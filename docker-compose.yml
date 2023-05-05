@@ -1,47 +1,38 @@
-version: '3.8'
+version: "3.8"
 
 services:
+
   app:
-    container_name: qr-attendance-app
-    platform: linux/x86_64
-    # platform: linux/arm64/v8
     build:
       context: .
-      dockerfile: ./.docker/Dockerfile.local
+      args:
+        uid: ${UID}
+    container_name: qr-attendance-app
+    environment:
+      - APACHE_RUN_USER=#${UID}
+      - APACHE_RUN_GROUP=#${UID}
+    volumes:
+      - .:/var/www/html
     ports:
       - 8000:80
-    env_file:
-      - .env
-    environment:
-      XDEBUG_ENABLED: 1
-      XDEBUG_REMOTE_AUTOSTART: 1
-      XDEBUG_MAXNESTING_LEVEL: 1000
-      XDEBUG_REMOTE_CONNECT_BACK: 1
-    volumes:
-      - ./:/var/www/html
-      - .docker/php/php.ini:/usr/local/etc/php/php.ini
-      - .docker/apache/apache2-ci.conf:/etc/apache2/apache2.conf
-      - .docker/apache/sites-enabled/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
-    depends_on:
-      - db
     networks:
       - qr-attendance
 
-  db:
+  mysql:
     container_name: qr-attendance-db
+    restart: always
+    image: mysql:8.0
     platform: linux/x86_64
-    # platform: linux/arm64/v8
-    image: mysql:8
+    ports:
+     - 3306:3306
+    env_file:
+      - ./.env
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       TZ: Asia/Singapore
-    env_file:
-      - .env
-    ports:
-      - 3306:3306
     volumes:
       - qr-attendance-db-data:/var/lib/mysql
       - ./.docker/mysql/initdb.d:/docker-entrypoint-initdb.d
@@ -52,17 +43,19 @@ services:
     container_name: qr-attendance-phpmyadmin
     platform: linux/x86_64
     image: phpmyadmin/phpmyadmin
+    env_file:
+      - ./.env
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=db
-      - PMA_USER=root
+      - PMA_HOST=${DB_HOST}
+      - PMA_USER=${DB_USERNAME}
       - PMA_PASSWORD=${DB_PASSWORD}
     ports:
       - 8033:80
     volumes:
       - ./.docker/phpmyadmin/sessions:/sessions
     depends_on:
-      - db
+      - mysql
     networks:
       - qr-attendance
 
@@ -78,6 +71,7 @@ services:
 volumes:
   qr-attendance-db-data:
     driver: local
+
 networks:
   qr-attendance:
     driver: bridge

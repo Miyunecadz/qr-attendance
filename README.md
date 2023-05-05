@@ -25,6 +25,14 @@ This will attached the container to the terminal. Then install the dependencies
     composer install
 Once installed you can now used the `php artisan` command.
 
+Now install the dependency in front end
+
+    npm install
+Once the installation is done, now build the assets
+
+    npm run build
+This will compile the assets so that it will reflect on front end
+
 ### Stopping the container
 To stop the container, simple run this command
 
