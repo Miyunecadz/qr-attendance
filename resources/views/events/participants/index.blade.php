@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="content">
         <div class="container-fluid">
 
@@ -96,23 +96,28 @@
         const participants = $('#participants_table').DataTable({
             initComplete: function () {
                 this.api().columns()
-                    .every(function () {
-                        var column = this;
-                        var select = $('<select><option value=""></option></select>')
-                            .appendTo($(column.footer()).empty())
-                            .on('change', function () {
-                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-    
-                                column.search(val ? '^' + val + '$' : '', true, false).draw();
-                            });
-    
-                        column
-                            .data()
-                            .unique()
-                            .sort()
-                            .each(function (d, j) {
-                                select.append('<option value="' + d + '">' + d + '</option>');
-                            });
+                    .every(function (columnIndex) {
+                        if(columnIndex != 0) {
+                            var column = this;
+                            var select = $('<select><option value=""></option></select>')
+                                .appendTo($(column.footer()).empty())
+                                .on('change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                    column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                });
+
+                            column
+                                .data()
+                                .unique()
+                                .sort()
+                                .each(function (d, j) {
+                                    if(!d.includes('<input')) {
+                                        select.append('<option value="' + d + '">' + d + '</option>');
+                                    }
+                                });
+
+                        }
                     });
             }
         });

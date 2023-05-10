@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -38,7 +38,7 @@
                                     </thead>
                                     <tbody>
                                     @foreach ($participants as $participant)
-                                        <tr>  
+                                        <tr>
                                             <td><input type="checkbox" name="participants[]" id="participants" value="{{ $participant->id }}-{{ $participant->user_type }}" class=""></td>
                                             <td>{{ $participant->id_number }}</td>
                                             <td>{{ $participant->name }}</td>
@@ -47,6 +47,15 @@
                                         </tr>
                                     @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </form>
                         </div>
@@ -58,7 +67,34 @@
 
 <script>
     $(document).ready( function () {
-        const participants = $('#participants_table').DataTable();
+        const participants = $('#participants_table').DataTable({
+            initComplete: function () {
+                this.api().columns()
+                    .every(function (columnIndex) {
+                        if(columnIndex != 0) {
+                            var column = this;
+                            var select = $('<select><option value=""></option></select>')
+                                .appendTo($(column.footer()).empty())
+                                .on('change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                    column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                });
+
+                            column
+                                .data()
+                                .unique()
+                                .sort()
+                                .each(function (d, j) {
+                                    if(!d.includes('<input')) {
+                                        select.append('<option value="' + d + '">' + d + '</option>');
+                                    }
+                                });
+
+                        }
+                    });
+            }
+        });
 
         $(".selectAll").on( "click", function(e) {
             if ($(this).is( ":checked" )) {

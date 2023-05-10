@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasPrettyStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EventParticipant extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasPrettyStatus;
 
     protected $fillable = [
         'event_id',
@@ -19,6 +20,11 @@ class EventParticipant extends Model
         'time_out',
         'is_present',
     ];
+
+    public const STATUS_NONE = 0;
+    public const STATUS_LOGIN_ONLY = 1;
+    public const STATUS_PRESENT = 2;
+    public const STATUS_ABSENT = 3;
 
     public function event() : BelongsTo
     {
@@ -59,16 +65,5 @@ class EventParticipant extends Model
         }
 
         return 'Faculty';
-    }
-
-    public function getPrettyStatus()
-    {
-        if ($this->is_present == 1) {
-            return 'Time in only';
-        } elseif ($this->is_present == 2) {
-            return 'Present';
-        }
-
-        return 'Absent';
     }
 }
