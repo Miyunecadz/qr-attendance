@@ -46,7 +46,7 @@
                                 <table class="table table-responsive-sm table-striped-columns table-bordered table-hover" id="participants_table">
                                     <thead>
                                         <tr>
-                                            <th></th>
+                                            <th><input type="checkbox" class="selectAll" name="selectAll" value="all"></th>
                                             <th>ID Number</th>
                                             <th>Participant Name</th>
                                             <th>Participant Type</th>
@@ -70,6 +70,18 @@
                                         </tr>
                                     @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th>ID Number</th>
+                                            <th>Participant Name</th>
+                                            <th>Participant Type</th>
+                                            <th>Department</th>
+                                            <th>Logged In</th>
+                                            <th>Logged Out</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </form>
                         </div>
@@ -81,7 +93,39 @@
 
 <script>
     $(document).ready( function () {
-        $('#participants_table').DataTable();
+        const participants = $('#participants_table').DataTable({
+            initComplete: function () {
+                this.api().columns()
+                    .every(function () {
+                        var column = this;
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+    
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+    
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function (d, j) {
+                                select.append('<option value="' + d + '">' + d + '</option>');
+                            });
+                    });
+            }
+        });
+
+        $(".selectAll").on( "click", function(e) {
+            if ($(this).is( ":checked" )) {
+                let rows = participants.rows({ 'search': 'applied' }).nodes();
+                $('input[type="checkbox"]', rows).prop('checked', this.checked);
+            } else {
+                let rows = participants.rows({ 'search': 'applied' }).nodes();
+                $('input[type="checkbox"]', rows).prop('checked', false);
+            }
+        });
     } );
 </script>
 @endsection

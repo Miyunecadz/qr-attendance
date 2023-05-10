@@ -29,7 +29,7 @@
                                 <table class="table table-responsive-sm table-striped-columns table-bordered table-hover" id="participants_table">
                                     <thead>
                                         <tr>
-                                            <th></th>
+                                            <th><input type="checkbox" class="selectAll" name="selectAll" value="all"></th>
                                             <th>ID Number</th>
                                             <th>Participant Name</th>
                                             <th>Participant Type</th>
@@ -58,7 +58,17 @@
 
 <script>
     $(document).ready( function () {
-        $('#participants_table').DataTable();
+        const participants = $('#participants_table').DataTable();
+
+        $(".selectAll").on( "click", function(e) {
+            if ($(this).is( ":checked" )) {
+                let rows = participants.rows({ 'search': 'applied' }).nodes();
+                $('input[type="checkbox"]', rows).prop('checked', this.checked);
+            } else {
+                let rows = participants.rows({ 'search': 'applied' }).nodes();
+                $('input[type="checkbox"]', rows).prop('checked', false);
+            }
+        });
     } );
 </script>
 @endsection
