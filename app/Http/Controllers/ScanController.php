@@ -80,7 +80,7 @@ class ScanController extends Controller
 
         $timeNow = now('Asia/Singapore')->format('Y-m-d H:i:s');
 
-        if($participant->is_present == 0) {
+        if($participant->is_present == EventParticipant::STATUS_NONE) {
             if($timeNow <= Carbon::parse($event->date .' '. $event->time_start)->addHour()->format('Y-m-d H:i:s')) {
                 $participant->update([
                     'time_in' => now('Asia/Singapore')->format('Y-m-d H:i:s'),
@@ -91,7 +91,7 @@ class ScanController extends Controller
             } else {
                 return back()->with('fail', 'Unable to proceed to the process, since participant failed to comply the given time of login');
             }
-        } elseif($participant->is_present == 1) {
+        } elseif($participant->is_present == EventParticipant::STATUS_LOGIN_ONLY) {
             if($timeNow <= Carbon::parse($event->date .' '. $event->time_end)->addHour()->format('Y-m-d H:i:s')) {
                 $participant->update([
                     'time_out' => now('Asia/Singapore')->format('Y-m-d H:i:s'),
@@ -102,6 +102,8 @@ class ScanController extends Controller
             } else {
                 return back()->with('fail', 'Unable to proceed to the process, since participant failed to comply the given time of logout');
             }
+        } elseif ($participant->is_present == EventParticipant::STATUS_ABSENT) {
+            return back()->with('fail', 'Participant was mark as absent');
         }
 
         return back()->with('success', "Participant has already attended the event");
