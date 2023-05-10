@@ -43,6 +43,7 @@ class EventBacklogController extends Controller
             $eventKeys = $this->loopArray($events, 'key');
             $eventItems = $this->loopArray($events, 'value');
         }
+        
 
         return view('reports.events', compact('eventKeys', 'eventItems'));
     }

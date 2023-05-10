@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('Attendance Report') }}</h1>
+                    <h1 class="m-0">{{ __('Attendance Reports') }}</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -33,7 +33,31 @@
             </div>
         </div>
     </div>
+
+   
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="list-group">
+                                 <form action="" method="get" class="row">
+                                       <h6 > Events </h6>
+                                        <button type="button" class="list-group-item list-group-item-action" >{{ request()->month_start}}
+                                        {{ request()->event_title}}
+                                        </button> 
+                                </form>
+                        </div>
+        </div>
+            </div>
+            </div>
+            </div>
+        </div>
+ 
 @endsection
+
+
 
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
@@ -79,5 +103,9 @@
             }
         }
         });
+        
     </script>
 @endsection
+
+
+
