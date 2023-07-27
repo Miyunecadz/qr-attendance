@@ -64,13 +64,13 @@ class EventParticipantController extends Controller
             $participant['updated_at'] = now();
 
             $user = '';
-            if($datum[1] == User::STUDENT) {
+            if ($datum[1] == User::STUDENT) {
                 $user = Student::find($datum[0]);
             } elseif ($datum[1] == User::FACULTY) {
                 $user = Faculty::find($datum[0]);
             }
 
-            if($user) {
+            if ($user) {
                 Mail::to($user->email)->send(new InviteParticipantEmail($event, $user));
             }
 

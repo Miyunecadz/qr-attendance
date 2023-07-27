@@ -24,5 +24,4 @@ class Event extends Model
     {
         return $this->hasMany(EventParticipant::class);
     }
-
 }

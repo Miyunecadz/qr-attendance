@@ -22,11 +22,14 @@ class EventParticipant extends Model
     ];
 
     public const STATUS_NONE = 0;
+
     public const STATUS_LOGIN_ONLY = 1;
+
     public const STATUS_PRESENT = 2;
+
     public const STATUS_ABSENT = 3;
 
-    public function event() : BelongsTo
+    public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
     }

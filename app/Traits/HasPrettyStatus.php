@@ -2,11 +2,11 @@
 
 namespace App\Traits;
 
-
-trait HasPrettyStatus {
+trait HasPrettyStatus
+{
     public function getPrettyStatus()
     {
-        if($this->is_present == 0) {
+        if ($this->is_present == 0) {
             return '';
         } elseif ($this->is_present == 1) {
             return 'Time in only';
