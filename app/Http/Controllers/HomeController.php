@@ -86,7 +86,7 @@ class HomeController extends Controller
     {
         $user = auth()->user();
 
-        if($user->account_type == 2) {
+        if ($user->account_type == 2) {
             return redirect(route('students.attendance', ['student' => $user->user_id]));
         }
 

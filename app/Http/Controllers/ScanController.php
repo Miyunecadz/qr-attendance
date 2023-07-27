@@ -74,25 +74,25 @@ class ScanController extends Controller
 
         $event = Event::find($request->event);
 
-        if($event->date != now('Asia/Singapore')->format('Y-m-d')) {
+        if ($event->date != now('Asia/Singapore')->format('Y-m-d')) {
             return back()->with('fail', 'Unable to proceed to the process, since event date does not match the todays date');
         }
 
         $timeNow = now('Asia/Singapore')->format('Y-m-d H:i:s');
 
-        if($participant->is_present == EventParticipant::STATUS_NONE) {
-            if($timeNow <= Carbon::parse($event->date .' '. $event->time_start)->addHour()->format('Y-m-d H:i:s')) {
+        if ($participant->is_present == EventParticipant::STATUS_NONE) {
+            if ($timeNow <= Carbon::parse($event->date.' '.$event->time_start)->addHour()->format('Y-m-d H:i:s')) {
                 $participant->update([
                     'time_in' => now('Asia/Singapore')->format('Y-m-d H:i:s'),
-                    'is_present' => 1
+                    'is_present' => 1,
                 ]);
 
                 return back()->with('success', 'Participant successfully logged in');
             } else {
                 return back()->with('fail', 'Unable to proceed to the process, since participant failed to comply the given time of login');
             }
-        } elseif($participant->is_present == EventParticipant::STATUS_LOGIN_ONLY) {
-            if($timeNow <= Carbon::parse($event->date .' '. $event->time_end)->addHour()->format('Y-m-d H:i:s')) {
+        } elseif ($participant->is_present == EventParticipant::STATUS_LOGIN_ONLY) {
+            if ($timeNow <= Carbon::parse($event->date.' '.$event->time_end)->addHour()->format('Y-m-d H:i:s')) {
                 $participant->update([
                     'time_out' => now('Asia/Singapore')->format('Y-m-d H:i:s'),
                     'is_present' => 2,
@@ -106,6 +106,6 @@ class ScanController extends Controller
             return back()->with('fail', 'Participant was mark as absent');
         }
 
-        return back()->with('success', "Participant has already attended the event");
+        return back()->with('success', 'Participant has already attended the event');
     }
 }
