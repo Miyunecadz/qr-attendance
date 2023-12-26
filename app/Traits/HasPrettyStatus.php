@@ -16,6 +16,7 @@ trait HasPrettyStatus
 
         return 'Absent';
     }
+
     public function getPrettyStatus2()
     {
         if ($this->is_present == 0) {
