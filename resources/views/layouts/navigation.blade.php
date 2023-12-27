@@ -61,7 +61,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('faculties.index') }}" class="nav-link @if(request()->routeIs('faculties.*')) active @endif">
                                     <i class="nav-icon fas fa-user-tie"></i>
-                                    <p>Manage Faculties</p>
+                                    <p>Manage Faculty</p>
                                 </a>
                             </li>
                         </ul>
@@ -78,15 +78,29 @@
                             <li class="nav-item">
                                 <a href="{{ route('attendance.report') }}" class="nav-link @if(request()->routeIs('attendance.report')) active @endif">
                                     <i class="nav-icon fas fa-user-check"></i>
-                                    <p>Attendance Report</p>
+                                    <p>Event Records</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('report.event') }}" class="nav-link @if(request()->routeIs('report.event')) active @endif">
                                     <i class="nav-icon far fa-calendar"></i>
-                                    <p>Event Backlog</p>
+                                    <p>Event History</p>
                                 </a>
                             </li>
+                           
+                            <li class="nav-item">
+                                 <a href="{{ route('report.student') }}" class="nav-link @if(request()->routeIs('report.student')) active @endif">
+                                    <i class="nav-icon far fa-user"></i>
+                                    <p>Attendace Report </p>
+                                </a>
+
+                            </li>
+
+
+                            
+
+
+
                         </ul>
                     </li>
                 @endif

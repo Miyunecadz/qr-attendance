@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/scan/{qrcode}', [ScanController::class, 'show'])->name('scan.show');
     Route::get('attendance-report', AttendanceReportController::class)->name('attendance.report');
     Route::get('events-report', EventBacklogController::class)->name('report.event');
+
+    Route::get('/reports/student', [StudentController::class, 'attendanceReport'])->name('report.student');
 });
 
 Route::get('/offline', function () {

@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('Attendance Report') }}</h1>
+                    <h1 class="m-0">{{ __('Event Records') }}</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -27,6 +27,10 @@
                                         <option value="{{$event->id}}" @selected(request()->event == $event->id)>{{$event->title}}</option>
                                     @endforeach
                                 </select>
+                               
+                                {{-- <select name="event" id="event" class="events col-md-4 col-lg-4 form-control my-2 my-md-0 mr-md-2">
+                                    <option value="">Select Year</option>
+                                </select> --}}
 
                                 <button type="submit" class="col-md-2 col-lg-1 btn btn-sm btn-primary my-2 my-md-0 ml-md-2">Generate</button>
                             </form>

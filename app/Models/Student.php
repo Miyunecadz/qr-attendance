@@ -21,4 +21,9 @@ class Student extends Model
         'contact_number',
         'email',
     ];
+
+    public function eventParticipants()
+    {
+        return $this->belongsTo(EventParticipant::class, 'user_id', 'id');
+    }
 }

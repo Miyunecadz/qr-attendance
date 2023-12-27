@@ -16,4 +16,17 @@ trait HasPrettyStatus
 
         return 'Absent';
     }
+
+    public function getPrettyStatus2()
+    {
+        if ($this->is_present == 0) {
+            return 'X';
+        } elseif ($this->is_present == 1) {
+            return 'H';
+        } elseif ($this->is_present == 2) {
+            return 'P';
+        }
+
+        return 'Absent';
+    }
 }

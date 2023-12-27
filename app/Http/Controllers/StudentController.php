@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventParticipant;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -204,5 +205,19 @@ class StudentController extends Controller
             ->get();
 
         return view('users.students.attendance', compact('attendances'));
+    }
+
+    public function attendanceReport(Request $request)
+    {
+        $student = Student::where('id_number', $request->student_id)
+            ->first();
+
+        $attendances = EventParticipant::where('user_id', $student?->id)
+            ->where('user_type', 2)
+            ->leftJoin('events', 'events.id', '=', 'event_participants.event_id')
+            ->withoutTrashed('events.deleted_at')
+            ->get();
+
+        return view('reports.student', compact('student', 'attendances'));
     }
 }
